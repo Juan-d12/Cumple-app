@@ -1,14 +1,9 @@
 import { Text, View, StyleSheet } from "react-native";
-import { Image } from "expo-image";
 
-export default function Index() {
+export default function About() {
   return (
     <View style={styles.container}>
-      <Image
-        source={require("./../../assets/images/torta.jpg")}
-        style={{ width: 200, height: 300 }}
-      />
-      <Text style={styles.text}>Recordatorio de cumpleaños</Text>
+      <Text style={styles.text}>Esta es la pagina about</Text>
     </View>
   );
 }
