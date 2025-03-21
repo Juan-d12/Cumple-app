@@ -7,3 +7,7 @@ export const HomeIcon = (props) => (
 export const InfoCircle = (props) => (
   <FontAwesome name="info-circle" size={24} color="black" {...props} />
 );
+
+export const BirthdayCake = (props) => (
+  <FontAwesome name="birthday-cake" size={24} color="black" {...props} />
+);
