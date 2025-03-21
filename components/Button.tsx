@@ -6,7 +6,6 @@ import {
   ImageBackground,
 } from "react-native";
 import { BirthdayCake } from "./Icons";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
 type Props = {
   label: string;
