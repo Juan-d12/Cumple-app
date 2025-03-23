@@ -11,3 +11,11 @@ export const InfoCircle = (props) => (
 export const BirthdayCake = (props) => (
   <FontAwesome name="birthday-cake" size={24} color="black" {...props} />
 );
+
+export const Gift = (props) => (
+  <FontAwesome name="gift" size={24} color="black" {...props} />
+);
+
+export const Gear = (props) => (
+  <FontAwesome name="gear" size={24} color="black" {...props} />
+);

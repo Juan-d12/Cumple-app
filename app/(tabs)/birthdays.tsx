@@ -1,9 +1,11 @@
 import { Text, View, StyleSheet } from "react-native";
 
-export default function About() {
+export default function Birthdays() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>abut page (TODO)</Text>
+      <Text style={styles.text}>
+        This page will display all the saved birthdays (TODO)
+      </Text>
     </View>
   );
 }

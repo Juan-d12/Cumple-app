@@ -1,9 +1,11 @@
 import { Text, View, StyleSheet } from "react-native";
 
-export default function About() {
+export default function Configuration() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>abut page (TODO)</Text>
+      <Text style={styles.text}>
+        This is the config page for the app (TODO)
+      </Text>
     </View>
   );
 }

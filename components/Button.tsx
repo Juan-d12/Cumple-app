@@ -15,18 +15,13 @@ type Props = {
 export default function Button({ label, theme }: Props) {
   if (theme === "addBirthday") {
     return (
-      <View
-        style={[
-          styles.buttonContainer,
-          { borderWidth: 4, borderColor: "green", borderRadius: 18 },
-        ]}
-      >
+      <View style={styles.buttonContainer}>
         <Pressable
-          style={[styles.button, { backgroundColor: "blue" }]}
+          style={[styles.button, { backgroundColor: "#E5AE54" }]}
           onPress={() => alert("Send to the add birthday page TODO")}
         >
-          <BirthdayCake color={"#fff"} size={18} style={styles.buttonIcon} />
-          <Text style={[styles.buttonLabel, { color: "#fff" }]}>{label}</Text>
+          <BirthdayCake color={"#000"} size={18} style={styles.buttonIcon} />
+          <Text style={[styles.buttonLabel, { color: "#000" }]}>{label}</Text>
         </Pressable>
       </View>
     );
@@ -53,7 +48,7 @@ const styles = StyleSheet.create({
     padding: 3,
   },
   button: {
-    borderRadius: 10,
+    borderRadius: 15,
     width: "100%",
     height: "100%",
     alignItems: "center",
