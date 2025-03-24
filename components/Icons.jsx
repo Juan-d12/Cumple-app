@@ -19,3 +19,7 @@ export const Gift = (props) => (
 export const Gear = (props) => (
   <FontAwesome name="gear" size={24} color="black" {...props} />
 );
+
+export const WindowClose = (props) => (
+  <FontAwesome name="window-close" size={24} color="black" {...props} />
+);

@@ -10,15 +10,16 @@ import { BirthdayCake } from "./Icons";
 type Props = {
   label: string;
   theme?: "addBirthday";
+  onPress: () => void;
 };
 
-export default function Button({ label, theme }: Props) {
+export default function Button({ label, theme, onPress }: Props) {
   if (theme === "addBirthday") {
     return (
       <View style={styles.buttonContainer}>
         <Pressable
           style={[styles.button, { backgroundColor: "#E5AE54" }]}
-          onPress={() => alert("Send to the add birthday page TODO")}
+          onPress={onPress}
         >
           <BirthdayCake color={"#000"} size={18} style={styles.buttonIcon} />
           <Text style={[styles.buttonLabel, { color: "#000" }]}>{label}</Text>

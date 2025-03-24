@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { Image } from "react-native";
 
 type Props = {
-  imgSource: string;
+  imgSource: any;
 };
 
 export default function ImageViewer({ imgSource }: Props) {

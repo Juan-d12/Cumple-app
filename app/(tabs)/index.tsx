@@ -1,6 +1,8 @@
 import { Text, View, StyleSheet, useColorScheme } from "react-native";
+import { useState } from "react";
 import ImageViewer from "@/components/ImageViewer";
 import Button from "@/components/Button";
+import NewBirthdayForm from "@/components/NewBirthdayForm";
 
 const tortaImage = require("./../../assets/images/torta.jpg");
 
@@ -18,14 +20,29 @@ export default function Index() {
       ? styles.lightFooterContainer
       : styles.darkFooterContainer;
 
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+  const onAddBirthday = () => {
+    setIsModalVisible(true);
+  };
+
+  const onModalClose = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <View style={themeContainer}>
       <View style={styles.imageContainer}>
         <ImageViewer imgSource={tortaImage} />
       </View>
       <View style={themeFooterContainer}>
-        <Button label="Add Birthday" theme="addBirthday" />
+        <Button
+          label="Add Birthday"
+          theme="addBirthday"
+          onPress={onAddBirthday}
+        />
       </View>
+      <NewBirthdayForm isVisible={isModalVisible} onClose={onModalClose} />
     </View>
   );
 }
