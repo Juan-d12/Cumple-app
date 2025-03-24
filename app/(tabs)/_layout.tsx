@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { Gear, Gift, HomeIcon, InfoCircle } from "../../components/Icons";
+import { Gear, Gift, HomeIcon } from "../../components/Icons";
 
 export default function TabsLayout() {
   return (
@@ -36,19 +36,9 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="about"
-        options={{
-          title: "About",
-          headerTitleAlign: "center",
-          tabBarActiveTintColor: "#DB877B",
-          tabBarInactiveTintColor: "#c0c1c2",
-          tabBarIcon: ({ color }) => <InfoCircle color={color} />,
-        }}
-      />
-      <Tabs.Screen
         name="configuration"
         options={{
-          title: "Configuration",
+          title: "Settings",
           headerTitleAlign: "center",
           tabBarActiveTintColor: "#DB877B",
           tabBarInactiveTintColor: "#c0c1c2",
