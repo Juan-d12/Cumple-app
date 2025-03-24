@@ -7,8 +7,6 @@ import {
   useColorScheme,
 } from "react-native";
 import { WindowClose } from "./Icons";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import { Link } from "expo-router";
 
 type Props = {
   isVisible: boolean;

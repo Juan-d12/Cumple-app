@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  View,
-  Pressable,
-  Text,
-  ImageBackground,
-} from "react-native";
+import { StyleSheet, View, Pressable, Text } from "react-native";
 import { BirthdayCake } from "./Icons";
 
 type Props = {

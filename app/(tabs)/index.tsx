@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, useColorScheme } from "react-native";
+import { View, StyleSheet, useColorScheme } from "react-native";
 import { useState } from "react";
 import ImageViewer from "@/components/ImageViewer";
 import Button from "@/components/Button";
