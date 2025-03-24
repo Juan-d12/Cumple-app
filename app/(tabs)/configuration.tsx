@@ -1,21 +1,39 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, useColorScheme } from "react-native";
 import { Link } from "expo-router";
 import { InfoCircle } from "@/components/Icons";
 
 export default function Configuration() {
+  const colorScheme = useColorScheme();
+
+  const themeContainer =
+    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
+
+  const themeText =
+    colorScheme === "light" ? styles.lightText : styles.darkText;
+
+  const themeFooterContainer =
+    colorScheme === "light"
+      ? styles.lightFooterContainer
+      : styles.darkFooterContainer;
+
+  const themeLink =
+    colorScheme === "light" ? styles.lightLink : styles.darkLink;
+
+  const iconColor = colorScheme === "light" ? "#000" : "#fff";
+
   return (
-    <View style={styles.container}>
+    <View style={themeContainer}>
       <View>
-        <Text style={styles.text}>
+        <Text style={themeText}>
           This is the config page for the app (TODO)
         </Text>
       </View>
-      <View style={styles.footerContainer}>
-        <Text style={styles.text}>
-          <InfoCircle color={"#fff"} />
+      <View style={themeFooterContainer}>
+        <Text style={themeText}>
+          <InfoCircle color={iconColor} />
         </Text>
-        <Text style={styles.text}>Github:</Text>
-        <Link style={styles.link} href="https://github.com/Juan-d12/Cumple-app">
+        <Text style={themeText}>Github:</Text>
+        <Link style={themeLink} href="https://github.com/Juan-d12/Cumple-app">
           Cumple-app on github
         </Link>
       </View>
@@ -24,23 +42,44 @@ export default function Configuration() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  lightContainer: {
+    flex: 1,
+    backgroundColor: "#f5f5dc",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  darkContainer: {
     flex: 1,
     backgroundColor: "#25292e",
     alignItems: "center",
     justifyContent: "center",
   },
-  footerContainer: {
+  lightFooterContainer: {
+    flex: 1 / 7,
+    backgroundColor: "#f5f5dc",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  darkFooterContainer: {
     flex: 1 / 7,
     backgroundColor: "#25292e",
     alignItems: "center",
     justifyContent: "center",
   },
-  text: {
+  lightText: {
+    color: "#000",
+    paddingVertical: 3,
+  },
+  darkText: {
     color: "#fff",
     paddingVertical: 3,
   },
-  link: {
+  lightLink: {
+    color: "blue",
+    paddingVertical: 3,
+    textDecorationLine: "underline",
+  },
+  darkLink: {
     color: "skyblue",
     paddingVertical: 3,
     textDecorationLine: "underline",
