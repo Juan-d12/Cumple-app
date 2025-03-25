@@ -39,6 +39,8 @@ export default function NewBirthdayForm({ isVisible, onClose }: Props) {
   const themeBody =
     colorScheme === "light" ? styles.lightBody : styles.darkBody;
 
+  const themePad = colorScheme === "light" ? styles.lightPad : styles.darkPad;
+
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
       <View style={themeModalContent}>
@@ -48,8 +50,10 @@ export default function NewBirthdayForm({ isVisible, onClose }: Props) {
             <WindowClose color={iconColor} size={24} />
           </Pressable>
         </View>
-        <View style={themeBodyContainer}>
-          <Text style={themeBody}>Here comes the form (TODO)</Text>
+        <View style={themePad}>
+          <View style={themeBodyContainer}>
+            <Text style={themeBody}>Here comes the form (TODO)</Text>
+          </View>
         </View>
       </View>
     </Modal>
@@ -76,8 +80,8 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   lightTitleContainer: {
-    height: "8%",
-    backgroundColor: "#fff",
+    height: "6%",
+    backgroundColor: "#c0c1c2",
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     paddingHorizontal: 20,
@@ -86,7 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   darkTitleContainer: {
-    height: "8%",
+    height: "6%",
     backgroundColor: "#464C55",
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
@@ -108,12 +112,28 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5dc",
     alignItems: "center",
     justifyContent: "center",
+    borderRadius: 10,
   },
   darkBodyContainer: {
     flex: 1,
     backgroundColor: "#25292e",
     alignItems: "center",
     justifyContent: "center",
+    borderRadius: 10,
+  },
+  lightPad: {
+    flex: 1,
+    backgroundColor: "#c0c1c2",
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
+  },
+  darkPad: {
+    flex: 1,
+    backgroundColor: "#464C55",
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
   },
   lightBody: {
     color: "#000",
