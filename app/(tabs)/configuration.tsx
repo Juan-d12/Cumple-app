@@ -1,9 +1,25 @@
 import { Text, View, StyleSheet, useColorScheme } from "react-native";
 import { Link } from "expo-router";
+import { Picker } from "@react-native-picker/picker";
+import { useState, useEffect } from "react";
 import { InfoCircle } from "@/components/Icons";
 
 export default function Configuration() {
-  const colorScheme = useColorScheme();
+  const [selectedTheme, setSelectedTheme] = useState();
+  const [colorScheme, setColorScheme] = useState(useColorScheme());
+
+  const systemTheme = useColorScheme();
+
+  useEffect(() => {
+    const loadTheme = async () => {
+      if (selectedTheme === "light" || selectedTheme === "dark") {
+        setColorScheme(selectedTheme);
+      } else {
+        setColorScheme(systemTheme);
+      }
+    };
+    loadTheme();
+  }, [selectedTheme, systemTheme]); // This effect runs only when 'selectedTheme or systhemTheme' changes
 
   const themeContainer =
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
@@ -27,6 +43,19 @@ export default function Configuration() {
         <Text style={themeText}>
           This is the config page for the app (TODO)
         </Text>
+      </View>
+      <View>
+        <Text>Theme</Text>
+        <Picker
+          selectedValue={selectedTheme}
+          style={{ height: 70, width: 250 }}
+          mode={"dialog"}
+          onValueChange={(itemValue, itemIndex) => setSelectedTheme(itemValue)}
+        >
+          <Picker.Item label="System value" value="auto" />
+          <Picker.Item label="Light" value="light" />
+          <Picker.Item label="Dark" value="dark" />
+        </Picker>
       </View>
       <View style={themeFooterContainer}>
         <Text style={themeText}>

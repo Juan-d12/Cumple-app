@@ -12,7 +12,7 @@ export default function Button({ label, theme, onPress }: Props) {
     return (
       <View style={styles.buttonContainer}>
         <Pressable
-          style={[styles.button, { backgroundColor: "#E5AE54" }]}
+          style={[styles.button, { backgroundColor: "skyblue" }]}
           onPress={onPress}
         >
           <BirthdayCake color={"#000"} size={18} style={styles.buttonIcon} />
