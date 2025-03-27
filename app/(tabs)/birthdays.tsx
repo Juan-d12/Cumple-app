@@ -1,7 +1,23 @@
 import { Text, View, StyleSheet, useColorScheme } from "react-native";
+import { useState } from "react";
+import { useFocusEffect } from "expo-router";
 
 export default function Birthdays() {
-  const colorScheme = useColorScheme();
+  const { selectedColorScheme } = require("./configuration"); // Inintial Forbidden import
+  const [colorScheme, setColorScheme] = useState(useColorScheme());
+  const systemTheme = useColorScheme();
+
+  useFocusEffect(() => {
+    const loadTheme = async () => {
+      const { selectedColorScheme } = require("./configuration"); // Update Forbidden import
+      if (selectedColorScheme === "light" || selectedColorScheme === "dark") {
+        setColorScheme(selectedColorScheme);
+      } else {
+        setColorScheme(systemTheme);
+      }
+    };
+    loadTheme();
+  });
 
   const themeContainer =
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;

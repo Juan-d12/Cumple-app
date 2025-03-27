@@ -21,6 +21,8 @@ export default function Configuration() {
     loadTheme();
   }, [selectedTheme, systemTheme]); // This effect runs only when 'selectedTheme or systhemTheme' changes
 
+  module.exports = { selectedColorScheme: selectedTheme }; // Forbidden export
+
   const themeContainer =
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
 
@@ -45,7 +47,7 @@ export default function Configuration() {
         </Text>
       </View>
       <View>
-        <Text>Theme</Text>
+        <Text style={themeText}>Theme</Text>
         <Picker
           selectedValue={selectedTheme}
           style={{ height: 70, width: 250 }}
@@ -84,16 +86,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   lightFooterContainer: {
-    flex: 1 / 7,
     backgroundColor: "#f5f5dc",
     alignItems: "center",
     justifyContent: "center",
   },
   darkFooterContainer: {
-    flex: 1 / 7,
     backgroundColor: "#25292e",
     alignItems: "center",
     justifyContent: "center",
+    paddingTop: 20,
   },
   lightText: {
     color: "#000",
