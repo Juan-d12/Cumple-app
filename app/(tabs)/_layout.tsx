@@ -4,7 +4,7 @@ import { Gear, Gift, HomeIcon } from "../../components/Icons";
 
 export default function TabsLayout() {
   const colorScheme = useColorScheme();
-  const themeBackground = colorScheme === "light" ? "#f5f5dc" : "#25292e";
+  const themeBackground = colorScheme === "light" ? "#fcf8f1" : "#03070e";
   const themeHeaderTint = colorScheme === "light" ? "#000" : "#fff";
   const themeTabBarActive = colorScheme === "light" ? "#007389" : "#DB877B";
   const themeTabBarIncative = colorScheme === "light" ? "#b0b1b2" : "#c0c1c2";

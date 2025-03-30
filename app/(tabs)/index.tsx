@@ -1,6 +1,5 @@
 import { View, StyleSheet, useColorScheme } from "react-native";
 import { useState } from "react";
-import { useFocusEffect } from "expo-router";
 import ImageViewer from "@/components/ImageViewer";
 import Button from "@/components/Button";
 import NewBirthdayForm from "@/components/NewBirthdayForm";
@@ -8,21 +7,7 @@ import NewBirthdayForm from "@/components/NewBirthdayForm";
 const tortaImage = require("./../../assets/images/torta.jpg");
 
 export default function Index() {
-  const { selectedColorScheme } = require("./configuration"); // Inintial Forbidden import
-  const [colorScheme, setColorScheme] = useState(useColorScheme());
-  const systemTheme = useColorScheme();
-
-  useFocusEffect(() => {
-    const loadTheme = async () => {
-      const { selectedColorScheme } = require("./configuration"); // Update Forbidden import
-      if (selectedColorScheme === "light" || selectedColorScheme === "dark") {
-        setColorScheme(selectedColorScheme);
-      } else {
-        setColorScheme(systemTheme);
-      }
-    };
-    loadTheme();
-  });
+  const colorScheme = useColorScheme();
 
   const themeContainer =
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
@@ -65,22 +50,22 @@ export default function Index() {
 const styles = StyleSheet.create({
   lightContainer: {
     flex: 1,
-    backgroundColor: "#f5f5dc",
+    backgroundColor: "#fcf8f1",
     alignItems: "center",
   },
   darkContainer: {
     flex: 1,
-    backgroundColor: "#25292e",
+    backgroundColor: "#03070E",
     alignItems: "center",
   },
   lightFooterContainer: {
     flex: 1 / 2,
-    backgroundColor: "#f5f5dc",
+    backgroundColor: "#fcf8f1",
     alignItems: "center",
   },
   darkFooterContainer: {
     flex: 1 / 2,
-    backgroundColor: "#25292e",
+    backgroundColor: "#03070E",
     alignItems: "center",
   },
   lightText: {
