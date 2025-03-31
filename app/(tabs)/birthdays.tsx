@@ -1,4 +1,5 @@
 import { Text, View, StyleSheet, useColorScheme } from "react-native";
+import BirthdaysDb from "@/components/BirthdaysDb";
 
 export default function Birthdays() {
   const colorScheme = useColorScheme();
@@ -14,6 +15,7 @@ export default function Birthdays() {
       <Text style={themeText}>
         This page will display all the saved birthdays (TODO)
       </Text>
+      <BirthdaysDb></BirthdaysDb>
     </View>
   );
 }
