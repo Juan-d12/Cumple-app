@@ -7,6 +7,7 @@ import NewBirthdayForm from "@/components/NewBirthdayForm";
 const tortaImage = require("./../../assets/images/torta.jpg");
 
 export default function Index() {
+  // Color scheme
   const colorScheme = useColorScheme();
 
   const themeContainer =
@@ -20,6 +21,7 @@ export default function Index() {
       ? styles.lightFooterContainer
       : styles.darkFooterContainer;
 
+  // Modal
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const onAddBirthday = () => {

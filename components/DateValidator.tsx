@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Text, View, Button, Platform } from "react-native";
+import { Text, View, Platform } from "react-native";
+import Button from "./Button";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 export const SelectDate = () => {
-  const [date, setDate] = useState(new Date("2012-08-15"));
+  const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
@@ -11,8 +12,6 @@ export const SelectDate = () => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === "ios");
     setDate(currentDate);
-    console.log(currentDate);
-    console.log(date);
   };
 
   const showMode = (currentMode) => {
@@ -31,10 +30,15 @@ export const SelectDate = () => {
         <Text>{date.toDateString()}</Text>
       </View>
       <View>
-        <Button onPress={showDatepicker} title="Pick a date" />
+        <Button
+          label="Select a date"
+          theme="showDatePicker"
+          onPress={showDatepicker}
+        />
       </View>
       {show && (
         <DateTimePicker
+          maximumDate={new Date()}
           testID="dateTimePicker"
           value={date}
           mode={mode}

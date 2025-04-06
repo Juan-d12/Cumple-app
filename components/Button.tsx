@@ -21,7 +21,7 @@ export default function Button({ label, theme, onPress }: Props) {
       </View>
     );
   }
-  if (theme === "insertBirthday") {
+  if (theme === "insertBirthday" || "showDatePicker") {
     return (
       <View style={styles.buttonContainer}>
         <Pressable
