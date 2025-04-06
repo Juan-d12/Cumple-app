@@ -7,6 +7,8 @@ import {
   useColorScheme,
 } from "react-native";
 import { WindowClose } from "./Icons";
+import Button from "@/components/Button";
+import { SelectDate } from "./DateValidator";
 
 type Props = {
   isVisible: boolean;
@@ -53,6 +55,14 @@ export default function NewBirthdayForm({ isVisible, onClose }: Props) {
         <View style={themePad}>
           <View style={themeBodyContainer}>
             <Text style={themeBody}>Here comes the form (TODO)</Text>
+            <SelectDate></SelectDate>
+            <Button
+              label="Add"
+              theme="insertBirthday"
+              onPress={() =>
+                alert("check birthday is correct and add it to the DB")
+              }
+            />
           </View>
         </View>
       </View>

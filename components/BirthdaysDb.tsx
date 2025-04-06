@@ -3,7 +3,7 @@ import {
   useSQLiteContext,
   type SQLiteDatabase,
 } from "expo-sqlite";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { View, Text, StyleSheet, useColorScheme } from "react-native";
 
 export default function BirthdaysDb() {
@@ -14,12 +14,22 @@ export default function BirthdaysDb() {
 
   return (
     <View style={themeContainer}>
-      <SQLiteProvider databaseName="Birthdays.db" onInit={createTableIfNeeded}>
-        <Header />
-        <Content />
-      </SQLiteProvider>
+      <Suspense fallback={<Fallback />}>
+        <SQLiteProvider
+          databaseName="Birthdays.db"
+          onInit={createTableIfNeeded}
+          useSuspense
+        >
+          <Header />
+          <Content />
+        </SQLiteProvider>
+      </Suspense>
     </View>
   );
+}
+
+export function Fallback() {
+  return <Text>Loading DB...</Text>;
 }
 
 export function Header() {

@@ -3,7 +3,7 @@ import { BirthdayCake } from "./Icons";
 
 type Props = {
   label: string;
-  theme?: "addBirthday";
+  theme?: string; //addBirthday, insertBirthday
   onPress: () => void;
 };
 
@@ -16,6 +16,18 @@ export default function Button({ label, theme, onPress }: Props) {
           onPress={onPress}
         >
           <BirthdayCake color={"#000"} size={18} style={styles.buttonIcon} />
+          <Text style={[styles.buttonLabel, { color: "#000" }]}>{label}</Text>
+        </Pressable>
+      </View>
+    );
+  }
+  if (theme === "insertBirthday") {
+    return (
+      <View style={styles.buttonContainer}>
+        <Pressable
+          style={[styles.button, { backgroundColor: "skyblue" }]}
+          onPress={onPress}
+        >
           <Text style={[styles.buttonLabel, { color: "#000" }]}>{label}</Text>
         </Pressable>
       </View>
