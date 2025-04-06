@@ -5,7 +5,9 @@ import {
   Pressable,
   StyleSheet,
   useColorScheme,
+  TextInput,
 } from "react-native";
+import { useState } from "react";
 import { WindowClose } from "./Icons";
 import Button from "@/components/Button";
 import { SelectDate } from "./DateValidator";
@@ -16,6 +18,7 @@ type Props = {
 };
 
 export default function NewBirthdayForm({ isVisible, onClose }: Props) {
+  // Color scheme
   const colorScheme = useColorScheme();
 
   const iconColor = colorScheme === "light" ? "red" : "#DB877B";
@@ -43,6 +46,12 @@ export default function NewBirthdayForm({ isVisible, onClose }: Props) {
 
   const themePad = colorScheme === "light" ? styles.lightPad : styles.darkPad;
 
+  const themeInput =
+    colorScheme === "light" ? styles.lightInput : styles.darkInput;
+
+  // Name form
+  const [name, onChangName] = useState("");
+
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
       <View style={themeModalContent}>
@@ -55,6 +64,14 @@ export default function NewBirthdayForm({ isVisible, onClose }: Props) {
         <View style={themePad}>
           <View style={themeBodyContainer}>
             <Text style={themeBody}>Here comes the form (TODO)</Text>
+            <Text style={themeBody}>Name:</Text>
+            <TextInput
+              style={themeInput}
+              onChangeText={onChangName}
+              value={name}
+              placeholder="Insert Name"
+              placeholderTextColor={colorScheme === "light" ? "#000" : "#fff"}
+            />
             <SelectDate></SelectDate>
             <Button
               label="Add"
@@ -152,5 +169,21 @@ const styles = StyleSheet.create({
   darkBody: {
     color: "#fff",
     paddingVertical: 3,
+  },
+  lightInput: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    color: "#000",
+    borderColor: "#000",
+  },
+  darkInput: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    color: "#fff",
+    borderColor: "#fff",
   },
 });
