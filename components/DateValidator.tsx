@@ -1,10 +1,21 @@
 import React, { useState } from "react";
-import { Text, View, Platform } from "react-native";
+import { Text, View, Platform, StyleSheet, useColorScheme } from "react-native";
 import Button from "./Button";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-export const SelectDate = () => {
-  const [date, setDate] = useState(new Date());
+type Props = {
+  date: any;
+  setDate: any;
+};
+
+export const SelectDate = ({ date, setDate }: Props) => {
+  // Color scheme
+  const colorScheme = useColorScheme();
+
+  const themeBody =
+    colorScheme === "light" ? styles.lightBody : styles.darkBody;
+
+  // Date Validator
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
@@ -26,15 +37,14 @@ export const SelectDate = () => {
   return (
     <View>
       <View>
-        <Text>Date Selected:</Text>
-        <Text>{date.toDateString()}</Text>
-      </View>
-      <View>
         <Button
           label="Select a date"
           theme="showDatePicker"
           onPress={showDatepicker}
         />
+      </View>
+      <View style={styles.bodyContainer}>
+        <Text style={themeBody}>Date Selected: {date.toDateString()}</Text>
       </View>
       {show && (
         <DateTimePicker
@@ -50,3 +60,18 @@ export const SelectDate = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  lightBody: {
+    color: "#000",
+    paddingVertical: 3,
+  },
+  darkBody: {
+    color: "#fff",
+    paddingVertical: 3,
+  },
+  bodyContainer: {
+    alignItems: "center",
+    paddingVertical: 3,
+  },
+});

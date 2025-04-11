@@ -50,7 +50,10 @@ export default function NewBirthdayForm({ isVisible, onClose }: Props) {
     colorScheme === "light" ? styles.lightInput : styles.darkInput;
 
   // Name form
-  const [name, onChangName] = useState("");
+  const [name, onChangeName] = useState("");
+
+  // Date Validator
+  const [date, setDate] = useState(new Date());
 
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
@@ -67,12 +70,13 @@ export default function NewBirthdayForm({ isVisible, onClose }: Props) {
             <Text style={themeBody}>Name:</Text>
             <TextInput
               style={themeInput}
-              onChangeText={onChangName}
+              onChangeText={onChangeName}
               value={name}
               placeholder="Insert Name"
               placeholderTextColor={colorScheme === "light" ? "#000" : "#fff"}
             />
-            <SelectDate></SelectDate>
+            <Text style={themeBody}>Date:</Text>
+            <SelectDate date={date} setDate={setDate} />
             <Button
               label="Add"
               theme="insertBirthday"
