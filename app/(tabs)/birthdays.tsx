@@ -15,7 +15,7 @@ export default function Birthdays() {
       <Text style={themeText}>
         This page will display all the saved birthdays (TODO)
       </Text>
-      <BirthdaysDb></BirthdaysDb>
+      <BirthdaysDb showAddButton={false} />
     </View>
   );
 }

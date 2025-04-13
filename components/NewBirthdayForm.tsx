@@ -9,8 +9,9 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { WindowClose } from "./Icons";
-import Button from "@/components/Button";
 import { SelectDate } from "./DateValidator";
+import Button from "@/components/Button";
+import BirthdaysDb from "@/components/BirthdaysDb";
 
 type Props = {
   isVisible: boolean;
@@ -54,6 +55,10 @@ export default function NewBirthdayForm({ isVisible, onClose }: Props) {
 
   // Date Validator
   const [date, setDate] = useState(new Date());
+  const [day, setDay] = useState(Number(date.getDate()));
+  const [month, setMonth] = useState(Number(date.getMonth()));
+  const [year, setYear] = useState(Number(date.getFullYear()));
+  // console.log(`${year} - ${month + 1} - ${day}`);
 
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
@@ -76,13 +81,22 @@ export default function NewBirthdayForm({ isVisible, onClose }: Props) {
               placeholderTextColor={colorScheme === "light" ? "#000" : "#fff"}
             />
             <Text style={themeBody}>Date:</Text>
-            <SelectDate date={date} setDate={setDate} />
-            <Button
-              label="Add"
-              theme="insertBirthday"
-              onPress={() =>
-                alert("check birthday is correct and add it to the DB")
-              }
+            <SelectDate
+              date={date}
+              setDate={setDate}
+              day={day}
+              setDay={setDay}
+              month={month}
+              setMonth={setMonth}
+              year={year}
+              setYear={setYear}
+            />
+            <BirthdaysDb
+              showAddButton={true}
+              insertName={name}
+              insertDay={day}
+              insertMonth={month}
+              insertYear={year}
             />
           </View>
         </View>

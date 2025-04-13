@@ -5,8 +5,23 @@ import {
 } from "expo-sqlite";
 import { useEffect, useState, Suspense } from "react";
 import { View, Text, StyleSheet, useColorScheme } from "react-native";
+import Button from "@/components/Button";
 
-export default function BirthdaysDb() {
+type Props = {
+  showAddButton: boolean;
+  insertName?: string;
+  insertDay?: number;
+  insertMonth?: number;
+  insertYear?: number;
+};
+
+export default function BirthdaysDb({
+  showAddButton,
+  insertName,
+  insertDay,
+  insertMonth,
+  insertYear,
+}: Props) {
   const colorScheme = useColorScheme();
 
   const themeContainer =
@@ -21,7 +36,17 @@ export default function BirthdaysDb() {
           useSuspense
         >
           <Header />
-          <Content />
+          {!showAddButton ? (
+            <Content />
+          ) : (
+            <Button
+              label="Add"
+              theme="insertBirthday"
+              onPress={() =>
+                alert("check birthday is correct and add it to the DB (TO DO)")
+              }
+            />
+          )}
         </SQLiteProvider>
       </Suspense>
     </View>
@@ -40,6 +65,7 @@ export function Header() {
       : styles.darkHeaderContainer;
   const themeHeaderText =
     colorScheme === "light" ? styles.lightHeaderText : styles.darkHeaderText;
+
   const db = useSQLiteContext();
   const [version, setVersion] = useState("");
   useEffect(() => {
@@ -90,7 +116,7 @@ export function Content() {
     <View style={themeContentContainer}>
       {todos.map((todo, index) => (
         <View style={themeTodoItemContainer} key={index}>
-          <Text>{`${todo.name}: ${todo.day} - ${todo.month} - ${todo.year}`}</Text>
+          <Text>{`${todo.name}: ${todo.day} - ${todo.month + 1} - ${todo.year}`}</Text>
         </View>
       ))}
     </View>
