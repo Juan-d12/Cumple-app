@@ -55,10 +55,6 @@ export default function NewBirthdayForm({ isVisible, onClose }: Props) {
 
   // Date Validator
   const [date, setDate] = useState(new Date());
-  const [day, setDay] = useState(Number(date.getDate()));
-  const [month, setMonth] = useState(Number(date.getMonth()));
-  const [year, setYear] = useState(Number(date.getFullYear()));
-  // console.log(`${year} - ${month + 1} - ${day}`);
 
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
@@ -81,22 +77,11 @@ export default function NewBirthdayForm({ isVisible, onClose }: Props) {
               placeholderTextColor={colorScheme === "light" ? "#000" : "#fff"}
             />
             <Text style={themeBody}>Date:</Text>
-            <SelectDate
-              date={date}
-              setDate={setDate}
-              day={day}
-              setDay={setDay}
-              month={month}
-              setMonth={setMonth}
-              year={year}
-              setYear={setYear}
-            />
+            <SelectDate date={date} setDate={setDate} />
             <BirthdaysDb
               showAddButton={true}
               insertName={name}
-              insertDay={day}
-              insertMonth={month}
-              insertYear={year}
+              insertDate={date}
             />
           </View>
         </View>

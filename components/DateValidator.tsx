@@ -6,24 +6,9 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 type Props = {
   date: any;
   setDate: any;
-  day: number;
-  setDay: any;
-  month: number;
-  setMonth: any;
-  year: number;
-  setYear: any;
 };
 
-export const SelectDate = ({
-  date,
-  setDate,
-  day,
-  setDay,
-  month,
-  setMonth,
-  year,
-  setYear,
-}: Props) => {
+export const SelectDate = ({ date, setDate }: Props) => {
   // Color scheme
   const colorScheme = useColorScheme();
 
@@ -38,9 +23,6 @@ export const SelectDate = ({
     const currentDate = selectedDate || date;
     setShow(Platform.OS === "ios");
     setDate(currentDate);
-    setDay(Number(currentDate.getDate()));
-    setMonth(Number(date.getMonth()));
-    setYear(Number(date.getFullYear()));
   };
 
   const showMode = (currentMode) => {

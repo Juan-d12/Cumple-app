@@ -3,24 +3,21 @@ import {
   useSQLiteContext,
   type SQLiteDatabase,
 } from "expo-sqlite";
+import * as SQLite from "expo-sqlite";
 import { useEffect, useState, Suspense } from "react";
-import { View, Text, StyleSheet, useColorScheme } from "react-native";
+import { View, Text, StyleSheet, useColorScheme, Alert } from "react-native";
 import Button from "@/components/Button";
 
 type Props = {
   showAddButton: boolean;
   insertName?: string;
-  insertDay?: number;
-  insertMonth?: number;
-  insertYear?: number;
+  insertDate?: any;
 };
 
 export default function BirthdaysDb({
   showAddButton,
   insertName,
-  insertDay,
-  insertMonth,
-  insertYear,
+  insertDate,
 }: Props) {
   const colorScheme = useColorScheme();
 
@@ -32,7 +29,7 @@ export default function BirthdaysDb({
       <Suspense fallback={<Fallback />}>
         <SQLiteProvider
           databaseName="Birthdays.db"
-          onInit={createTableIfNeeded}
+          onInit={migrateDbIfNeeded}
           useSuspense
         >
           <Header />
@@ -42,9 +39,31 @@ export default function BirthdaysDb({
             <Button
               label="Add"
               theme="insertBirthday"
-              onPress={() =>
-                alert("check birthday is correct and add it to the DB (TO DO)")
-              }
+              onPress={() => {
+                const insertDay = insertDate.getDate();
+                const insertMonth = insertDate.getMonth() + 1; // months are from 0 to 11
+                const insertYear = insertDate.getFullYear();
+                Alert.alert(
+                  "Confirm Birthday",
+                  `Name: ${insertName} \nDate(year-month-day):${insertYear} - ${insertMonth} - ${insertDay}`,
+                  [
+                    {
+                      text: "Cancel",
+                      style: "cancel",
+                    },
+                    {
+                      text: "OK",
+                      onPress: async () =>
+                        insertBirthday(
+                          insertName,
+                          insertDay,
+                          insertMonth,
+                          insertYear,
+                        ),
+                    },
+                  ],
+                );
+              }}
             />
           )}
         </SQLiteProvider>
@@ -52,6 +71,10 @@ export default function BirthdaysDb({
     </View>
   );
 }
+
+const onpressTest = async (name) => {
+  alert(`This is a test with ${name}`);
+};
 
 export function Fallback() {
   return <Text>Loading DB...</Text>;
@@ -123,11 +146,47 @@ export function Content() {
   );
 }
 
-async function createTableIfNeeded(db: SQLiteDatabase) {
-  await db.execAsync(`
-    PRAGMA journal_mode = 'wal';
-    CREATE TABLE IF NOT EXISTS birthdays (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT NOT NULL, day INT NOT NULL, month INT NOT NULL, year INT NOT NULL);
-    `);
+const insertBirthday = async (name, day, month, year) => {
+  const db = await SQLite.openDatabaseAsync("Birthdays.db");
+  // name must be unique
+  const nameResult = await db.getFirstAsync(
+    "SELECT name FROM birthdays WHERE name = ?",
+    name,
+  );
+  console.log(nameResult);
+  if (nameResult == name) {
+    alert("This name is already saved, try a different name");
+  } else {
+    await db.runAsync(
+      "INSERT INTO birthdays (name, day, month, year) VALUES (?, ?, ?, ?)",
+      name,
+      day,
+      month,
+      year,
+    );
+    alert(`${name} has been added`);
+  }
+};
+
+async function migrateDbIfNeeded(db: SQLiteDatabase) {
+  const DATABASE_VERSION = 1;
+  let { user_version: currentDbVersion } = await db.getFirstAsync<{
+    user_version: number;
+  }>("PRAGMA user_version");
+  if (currentDbVersion >= DATABASE_VERSION) {
+    return;
+  }
+  if (currentDbVersion === 0) {
+    await db.execAsync(`
+        PRAGMA journal_mode = 'wal';
+        CREATE TABLE IF NOT EXISTS birthdays (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT NOT NULL, day INT NOT NULL, month INT NOT NULL, year INT NOT NULL);
+        `);
+    currentDbVersion = 1;
+  }
+  // if (currentDbVersion === 1) {
+  //   Add more migrations
+  // }
+  await db.execAsync(`PRAGMA user_version = ${DATABASE_VERSION}`);
 }
 
 const styles = StyleSheet.create({
