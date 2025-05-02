@@ -124,6 +124,11 @@ export function Content() {
     colorScheme === "light"
       ? styles.lightTodoItemContainer
       : styles.darkTodoItemContainer;
+  const themeTodoItemText =
+    colorScheme === "light"
+      ? styles.lightTodoItemText
+      : styles.darkTodoItemText;
+
   const db = useSQLiteContext();
   const [todos, setTodos] = useState<Todo[]>([]);
 
@@ -139,7 +144,9 @@ export function Content() {
     <View style={themeContentContainer}>
       {todos.map((todo, index) => (
         <View style={themeTodoItemContainer} key={index}>
-          <Text>{`${todo.name}: ${todo.day} - ${todo.month + 1} - ${todo.year}`}</Text>
+          <Text
+            style={themeTodoItemText}
+          >{`${todo.name}: ${todo.day} - ${todo.month + 1} - ${todo.year}`}</Text>
         </View>
       ))}
     </View>
@@ -153,8 +160,7 @@ const insertBirthday = async (name, day, month, year) => {
     "SELECT name FROM birthdays WHERE name = ?",
     name,
   );
-  console.log(nameResult);
-  if (nameResult == name) {
+  if (nameResult && nameResult["name"] === name) {
     alert("This name is already saved, try a different name");
   } else {
     await db.runAsync(
@@ -206,4 +212,12 @@ const styles = StyleSheet.create({
   darkContentContainer: {},
   lightTodoItemContainer: {},
   darkTodoItemContainer: {},
+  lightTodoItemText: {
+    color: "#000",
+    paddingVertical: 3,
+  },
+  darkTodoItemText: {
+    color: "#fff",
+    paddingVertical: 3,
+  },
 });
