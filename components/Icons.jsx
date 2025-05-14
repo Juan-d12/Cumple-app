@@ -23,3 +23,7 @@ export const Gear = (props) => (
 export const WindowClose = (props) => (
   <FontAwesome name="window-close" size={24} color="black" {...props} />
 );
+
+export const Trash = (props) => (
+  <FontAwesome name="trash" size={24} color="black" {...props} />
+);
