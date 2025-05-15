@@ -1,5 +1,6 @@
 import { StyleSheet, View, Pressable, Text } from "react-native";
 import { BirthdayCake } from "./Icons";
+import { Trash } from "./Icons";
 
 type Props = {
   label: string;
@@ -21,13 +22,26 @@ export default function Button({ label, theme, onPress }: Props) {
       </View>
     );
   }
-  if (theme === "insertBirthday" || "showDatePicker") {
+  if (theme === "insertBirthday" || theme === "showDatePicker") {
     return (
       <View style={styles.buttonContainer}>
         <Pressable
           style={[styles.button, { backgroundColor: "skyblue" }]}
           onPress={onPress}
         >
+          <Text style={[styles.buttonLabel, { color: "#000" }]}>{label}</Text>
+        </Pressable>
+      </View>
+    );
+  }
+  if (theme === "deleteBirthday") {
+    return (
+      <View style={styles.buttonContainer}>
+        <Pressable
+          style={[styles.button, { backgroundColor: "red" }]}
+          onPress={onPress}
+        >
+          <Trash color={"#000"} size={18} style={styles.buttonIcon} />
           <Text style={[styles.buttonLabel, { color: "#000" }]}>{label}</Text>
         </Pressable>
       </View>

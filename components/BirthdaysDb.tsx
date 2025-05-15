@@ -146,7 +146,28 @@ export function Content() {
         <View style={themeTodoItemContainer} key={index}>
           <Text
             style={themeTodoItemText}
-          >{`${todo.name}: ${todo.day} - ${todo.month + 1} - ${todo.year}`}</Text>
+          >{`${todo.name}: ${todo.year} - ${todo.month + 1} - ${todo.day}`}</Text>
+          <Button
+            label="Delete"
+            theme="deleteBirthday"
+            onPress={() => {
+              const deleteName = todo.name;
+              Alert.alert(
+                "Delete confirmation",
+                `Are you sure you want to delete ${deleteName}?`,
+                [
+                  {
+                    text: "Cancel",
+                    style: "cancel",
+                  },
+                  {
+                    text: "Delete",
+                    onPress: async () => deleteBirthday(deleteName),
+                  },
+                ],
+              );
+            }}
+          />
         </View>
       ))}
     </View>
@@ -172,6 +193,10 @@ const insertBirthday = async (name, day, month, year) => {
     );
     alert(`${name} has been added`);
   }
+};
+
+const deleteBirthday = async (name) => {
+  alert(`${name} will be deleted (TO DO)`);
 };
 
 async function migrateDbIfNeeded(db: SQLiteDatabase) {

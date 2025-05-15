@@ -12,9 +12,8 @@ export default function Birthdays() {
 
   return (
     <View style={themeContainer}>
-      <Text style={themeText}>
-        This page will display all the saved birthdays (TODO)
-      </Text>
+      <Text style={themeText}>The Birthdays have this format:</Text>
+      <Text style={themeText}>Name: Year - Month - Day</Text>
       <BirthdaysDb showAddButton={false} />
     </View>
   );
