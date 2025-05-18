@@ -6,6 +6,8 @@ import {
 import * as SQLite from "expo-sqlite";
 import { useEffect, useState, Suspense } from "react";
 import { View, Text, StyleSheet, useColorScheme, Alert } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import React from "react";
 import Button from "@/components/Button";
 
 type Props = {
@@ -132,13 +134,24 @@ export function Content() {
   const db = useSQLiteContext();
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  useEffect(() => {
-    async function setup() {
-      const result = await db.getAllAsync<Todo>("SELECT * FROM birthdays");
-      setTodos(result);
-    }
-    setup();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      let isActive = true;
+      async function setup() {
+        const result = await db.getAllAsync<Todo>("SELECT * FROM birthdays");
+        if (isActive) {
+          setTodos(result);
+        }
+      }
+      setup();
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+        isActive = false;
+      };
+    }, []),
+  );
 
   return (
     <View style={themeContentContainer}>
