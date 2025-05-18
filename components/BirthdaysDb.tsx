@@ -146,7 +146,7 @@ export function Content() {
         <View style={themeTodoItemContainer} key={index}>
           <Text
             style={themeTodoItemText}
-          >{`${todo.name}: ${todo.year} - ${todo.month + 1} - ${todo.day}`}</Text>
+          >{`${todo.name}: ${todo.year} - ${todo.month} - ${todo.day}`}</Text>
           <Button
             label="Delete"
             theme="deleteBirthday"
@@ -196,7 +196,10 @@ const insertBirthday = async (name, day, month, year) => {
 };
 
 const deleteBirthday = async (name) => {
-  alert(`${name} will be deleted (TO DO)`);
+  const db = await SQLite.openDatabaseAsync("Birthdays.db");
+  // Delete birthday from te db
+  await db.runAsync("DELETE FROM birthdays WHERE name = ?", name);
+  alert(`${name} has been deleted`);
 };
 
 async function migrateDbIfNeeded(db: SQLiteDatabase) {
