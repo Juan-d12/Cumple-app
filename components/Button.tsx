@@ -38,7 +38,7 @@ export default function Button({ label, theme, onPress }: Props) {
     return (
       <View style={styles.buttonContainer}>
         <Pressable
-          style={[styles.button, { backgroundColor: "red" }]}
+          style={[styles.delButton, { backgroundColor: "orange" }]}
           onPress={onPress}
         >
           <Trash color={"#000"} size={18} style={styles.buttonIcon} />
@@ -67,6 +67,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 3,
+  },
+  delButton: {
+    borderRadius: 10,
+    width: "40%",
+    height: "70%",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
   },
   button: {
     borderRadius: 15,
