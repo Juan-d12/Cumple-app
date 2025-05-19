@@ -21,13 +21,8 @@ export default function BirthdaysDb({
   insertName,
   insertDate,
 }: Props) {
-  const colorScheme = useColorScheme();
-
-  const themeContainer =
-    colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
-
   return (
-    <View style={themeContainer}>
+    <View style={styles.Container}>
       <Suspense fallback={<Fallback />}>
         <SQLiteProvider
           databaseName="Birthdays.db"
@@ -84,10 +79,6 @@ export function Fallback() {
 
 export function Header() {
   const colorScheme = useColorScheme();
-  const themeHeaderContainer =
-    colorScheme === "light"
-      ? styles.lightHeaderContainer
-      : styles.darkHeaderContainer;
   const themeHeaderText =
     colorScheme === "light" ? styles.lightHeaderText : styles.darkHeaderText;
 
@@ -103,7 +94,7 @@ export function Header() {
     setup();
   }, []);
   return (
-    <View style={themeHeaderContainer}>
+    <View style={styles.HeaderContainer}>
       <Text style={themeHeaderText}>SQLite version: {version}</Text>
     </View>
   );
@@ -126,6 +117,10 @@ export function Content() {
     colorScheme === "light"
       ? styles.lightTodoItemContainer
       : styles.darkTodoItemContainer;
+  const themeTodoItemName =
+    colorScheme === "light"
+      ? styles.lightTodoItemName
+      : styles.darkTodoItemName;
   const themeTodoItemText =
     colorScheme === "light"
       ? styles.lightTodoItemText
@@ -157,9 +152,10 @@ export function Content() {
     <View style={themeContentContainer}>
       {todos.map((todo, index) => (
         <View style={themeTodoItemContainer} key={index}>
-          <Text
-            style={themeTodoItemText}
-          >{`${todo.name}: ${todo.year} - ${todo.month} - ${todo.day}`}</Text>
+          <Text style={themeTodoItemName}>{`${todo.name}`}</Text>
+          <Text style={themeTodoItemText}>
+            {`Date: ${todo.year} - ${todo.month} - ${todo.day}`}
+          </Text>
           <Button
             label="Delete"
             theme="deleteBirthday"
@@ -237,28 +233,71 @@ async function migrateDbIfNeeded(db: SQLiteDatabase) {
 }
 
 const styles = StyleSheet.create({
-  lightContainer: {},
-  darkContainer: {},
-  lightHeaderContainer: {},
-  darkHeaderContainer: {},
+  Container: {
+    flex: 1,
+    width: "100%",
+  },
+  HeaderContainer: {
+    alignItems: "center",
+  },
   lightHeaderText: {
     color: "#000",
     paddingVertical: 3,
+    paddingHorizontal: 10,
   },
   darkHeaderText: {
     color: "#fff",
     paddingVertical: 3,
+    paddingHorizontal: 10,
   },
-  lightContentContainer: {},
-  darkContentContainer: {},
-  lightTodoItemContainer: {},
-  darkTodoItemContainer: {},
+  lightContentContainer: {
+    paddingVertical: 20,
+    paddingHorizontal: 15,
+    gap: 5,
+    backgroundColor: "#e0e1e2",
+  },
+  darkContentContainer: {
+    paddingVertical: 20,
+    paddingHorizontal: 15,
+    gap: 5,
+    backgroundColor: "#25292e",
+  },
+  lightTodoItemContainer: {
+    borderWidth: 1,
+    borderRadius: 15,
+    borderColor: "#DB877B",
+    paddingLeft: 15,
+    paddingRight: 15,
+    backgroundColor: "#fcf8f1",
+  },
+  darkTodoItemContainer: {
+    borderWidth: 1,
+    borderRadius: 15,
+    borderColor: "skyblue",
+    paddingLeft: 15,
+    paddingRight: 15,
+    backgroundColor: "#03070e",
+  },
+  lightTodoItemName: {
+    color: "#000",
+    paddingVertical: 3,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  darkTodoItemName: {
+    color: "#fff",
+    paddingVertical: 3,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
   lightTodoItemText: {
     color: "#000",
     paddingVertical: 3,
+    fontSize: 16,
   },
   darkTodoItemText: {
     color: "#fff",
     paddingVertical: 3,
+    fontSize: 16,
   },
 });
