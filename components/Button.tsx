@@ -1,6 +1,5 @@
 import { StyleSheet, View, Pressable, Text } from "react-native";
-import { BirthdayCake } from "./Icons";
-import { Trash } from "./Icons";
+import { BirthdayCake, Trash } from "./Icons";
 
 type Props = {
   label: string;
