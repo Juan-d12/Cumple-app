@@ -5,7 +5,14 @@ import {
 } from "expo-sqlite";
 import * as SQLite from "expo-sqlite";
 import { useEffect, useState, Suspense } from "react";
-import { View, Text, StyleSheet, useColorScheme, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  useColorScheme,
+  Alert,
+} from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import Button from "@/components/Button";
@@ -149,40 +156,42 @@ export function Content() {
   );
 
   return (
-    <View style={themeContentContainer}>
-      {todos.map((todo, index) => (
-        <View style={themeTodoItemContainer} key={index}>
-          <Text style={themeTodoItemName}>{`${todo.name}`}</Text>
-          <Text style={themeTodoItemText}>
-            {`Date: ${todo.year} - ${todo.month} - ${todo.day}`}
-          </Text>
-          <Text style={themeTodoItemText}>
-            {`${daysUntilNextBirthday(todo.month, todo.day)} days left`}
-          </Text>
-          <Button
-            label="Delete"
-            theme="deleteBirthday"
-            onPress={() => {
-              const deleteName = todo.name;
-              Alert.alert(
-                "Delete confirmation",
-                `Are you sure you want to delete ${deleteName}?`,
-                [
-                  {
-                    text: "Cancel",
-                    style: "cancel",
-                  },
-                  {
-                    text: "Delete",
-                    onPress: async () => deleteBirthday(deleteName),
-                  },
-                ],
-              );
-            }}
-          />
-        </View>
-      ))}
-    </View>
+    <ScrollView>
+      <View style={themeContentContainer}>
+        {todos.map((todo, index) => (
+          <View style={themeTodoItemContainer} key={index}>
+            <Text style={themeTodoItemName}>{`${todo.name}`}</Text>
+            <Text style={themeTodoItemText}>
+              {`Date: ${todo.year} - ${todo.month} - ${todo.day}`}
+            </Text>
+            <Text style={themeTodoItemText}>
+              {`${daysUntilNextBirthday(todo.month, todo.day)} days left`}
+            </Text>
+            <Button
+              label="Delete"
+              theme="deleteBirthday"
+              onPress={() => {
+                const deleteName = todo.name;
+                Alert.alert(
+                  "Delete confirmation",
+                  `Are you sure you want to delete ${deleteName}?`,
+                  [
+                    {
+                      text: "Cancel",
+                      style: "cancel",
+                    },
+                    {
+                      text: "Delete",
+                      onPress: async () => deleteBirthday(deleteName),
+                    },
+                  ],
+                );
+              }}
+            />
+          </View>
+        ))}
+      </View>
+    </ScrollView>
   );
 }
 

@@ -13,7 +13,7 @@ export default function Birthdays() {
   return (
     <View style={themeContainer}>
       <Text style={themeText}>The Birthdays have this format:</Text>
-      <Text style={themeText}>Name: Year - Month - Day</Text>
+      <Text style={themeText}>Date: Year - Month - Day</Text>
       <BirthdaysDb showAddButton={false} />
     </View>
   );
