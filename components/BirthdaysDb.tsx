@@ -156,6 +156,9 @@ export function Content() {
           <Text style={themeTodoItemText}>
             {`Date: ${todo.year} - ${todo.month} - ${todo.day}`}
           </Text>
+          <Text style={themeTodoItemText}>
+            {`${daysUntilNextBirthday(todo.month, todo.day)} days left`}
+          </Text>
           <Button
             label="Delete"
             theme="deleteBirthday"
@@ -209,6 +212,52 @@ const deleteBirthday = async (name) => {
   // Delete birthday from te db
   await db.runAsync("DELETE FROM birthdays WHERE name = ?", name);
   alert(`${name} has been deleted`);
+};
+
+// returns the days left for the birthday
+const daysUntilNextBirthday = (month, day) => {
+  // Get current Year
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
+  const currentDay = currentDate.getDate();
+  // Check if it is a leap year only if date is feb 29
+  if (month == 2 && day == 29) {
+    var isLeapYear: Boolean;
+    if (
+      currentYear % 4 === 0 &&
+      currentYear % 400 === 0 &&
+      currentYear % 100 !== 0
+    ) {
+      isLeapYear = true;
+    } else {
+      isLeapYear = false;
+    }
+    // Change to march 1 if not a leap year
+    if (!isLeapYear) {
+      month = 3;
+      day = 1;
+    }
+  }
+  // compare both dates
+  // Date counts months from 0 so we nneed to substract 1
+  const birthdayThisYear = new Date(currentYear, month - 1, day);
+  const today = new Date(currentYear, currentMonth, currentDay);
+  var daysLeft: number;
+  if (today < birthdayThisYear) {
+    daysLeft = (birthdayThisYear - today) / 86400000;
+  } else if (+today === +birthdayThisYear) {
+    daysLeft = 0;
+  } else {
+    // Make sure is not feb 29 in case current year is leap
+    if (month === 2 && day === 29) {
+      month = 3;
+      day = 1;
+    }
+    const birthdayNextYear = new Date(currentYear + 1, month - 1, day);
+    daysLeft = (birthdayNextYear - today) / 86400000;
+  }
+  return daysLeft;
 };
 
 async function migrateDbIfNeeded(db: SQLiteDatabase) {
