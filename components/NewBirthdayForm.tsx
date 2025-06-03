@@ -10,7 +10,6 @@ import {
 import { useState } from "react";
 import { WindowClose } from "./Icons";
 import { SelectDate } from "./DateValidator";
-import Button from "@/components/Button";
 import BirthdaysDb from "@/components/BirthdaysDb";
 
 type Props = {
@@ -23,6 +22,9 @@ export default function NewBirthdayForm({ isVisible, onClose }: Props) {
   const colorScheme = useColorScheme();
 
   const iconColor = colorScheme === "light" ? "red" : "#DB877B";
+
+  const themeSeparator =
+    colorScheme === "light" ? styles.lightSeparator : styles.darkSeparator;
 
   const themeModalContent =
     colorScheme === "light"
@@ -67,7 +69,6 @@ export default function NewBirthdayForm({ isVisible, onClose }: Props) {
         </View>
         <View style={themePad}>
           <View style={themeBodyContainer}>
-            <Text style={themeBody}>Here comes the form (TODO)</Text>
             <Text style={themeBody}>Name:</Text>
             <TextInput
               style={themeInput}
@@ -76,8 +77,9 @@ export default function NewBirthdayForm({ isVisible, onClose }: Props) {
               placeholder="Insert Name"
               placeholderTextColor={colorScheme === "light" ? "#000" : "#fff"}
             />
-            <Text style={themeBody}>Date:</Text>
+            <View style={themeSeparator}></View>
             <SelectDate date={date} setDate={setDate} />
+            <View style={themeSeparator}></View>
             <BirthdaysDb
               showAddButton={true}
               insertName={name}
@@ -91,6 +93,26 @@ export default function NewBirthdayForm({ isVisible, onClose }: Props) {
 }
 
 const styles = StyleSheet.create({
+  lightSeparator: {
+    marginTop: 5,
+    marginBottom: 5,
+    height: "0.5%",
+    width: "95%",
+    backgroundColor: "#e0e1e2",
+    borderTopRightRadius: 2,
+    borderTopLeftRadius: 2,
+    alignSelf: "center",
+  },
+  darkSeparator: {
+    marginTop: 5,
+    marginBottom: 5,
+    height: "0.5%",
+    width: "95%",
+    backgroundColor: "#25292e",
+    borderTopRightRadius: 2,
+    borderTopLeftRadius: 2,
+    alignSelf: "center",
+  },
   lightModalContent: {
     height: "90%",
     width: "100%",
@@ -168,25 +190,29 @@ const styles = StyleSheet.create({
   lightBody: {
     color: "#000",
     paddingVertical: 3,
+    fontSize: 18,
   },
   darkBody: {
     color: "#fff",
     paddingVertical: 3,
+    fontSize: 18,
   },
   lightInput: {
-    height: 40,
+    height: "auto",
     margin: 12,
     borderWidth: 1,
     padding: 10,
     color: "#000",
     borderColor: "#000",
+    fontSize: 18,
   },
   darkInput: {
-    height: 40,
+    height: "auto",
     margin: 12,
     borderWidth: 1,
     padding: 10,
     color: "#fff",
     borderColor: "#fff",
+    fontSize: 18,
   },
 });

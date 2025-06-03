@@ -21,11 +21,23 @@ export default function Button({ label, theme, onPress }: Props) {
       </View>
     );
   }
-  if (theme === "insertBirthday" || theme === "showDatePicker") {
+  if (theme === "insertBirthday") {
     return (
       <View style={styles.buttonContainer}>
         <Pressable
           style={[styles.button, { backgroundColor: "skyblue" }]}
+          onPress={onPress}
+        >
+          <Text style={[styles.buttonLabel, { color: "#000" }]}>{label}</Text>
+        </Pressable>
+      </View>
+    );
+  }
+  if (theme === "showDatePicker") {
+    return (
+      <View style={styles.buttonContainer}>
+        <Pressable
+          style={[styles.dateButton, { backgroundColor: "skyblue" }]}
           onPress={onPress}
         >
           <Text style={[styles.buttonLabel, { color: "#000" }]}>{label}</Text>
@@ -66,6 +78,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 3,
+  },
+  dateButton: {
+    borderRadius: 15,
+    width: "60%",
+    height: "80%",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
   },
   delButton: {
     borderRadius: 10,

@@ -291,9 +291,18 @@ async function migrateDbIfNeeded(db: SQLiteDatabase) {
 }
 
 const styles = StyleSheet.create({
+  separator: {
+    height: "0.5%",
+    width: "95%",
+    backgroundColor: "#25292e",
+    borderTopRightRadius: 2,
+    borderTopLeftRadius: 2,
+    alignItems: "center",
+  },
   Container: {
     flex: 1,
     width: "100%",
+    alignItems: "center",
   },
   HeaderContainer: {
     alignItems: "center",

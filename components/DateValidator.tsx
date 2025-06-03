@@ -36,15 +36,16 @@ export const SelectDate = ({ date, setDate }: Props) => {
 
   return (
     <View>
+      <View style={styles.bodyContainer}>
+        <Text style={themeBody}>Date:</Text>
+        <Text style={themeBody}>{date.toDateString()}</Text>
+      </View>
       <View>
         <Button
-          label="Select a date"
+          label="Change date"
           theme="showDatePicker"
           onPress={showDatepicker}
         />
-      </View>
-      <View style={styles.bodyContainer}>
-        <Text style={themeBody}>Date Selected: {date.toDateString()}</Text>
       </View>
       {show && (
         <DateTimePicker
@@ -65,10 +66,12 @@ const styles = StyleSheet.create({
   lightBody: {
     color: "#000",
     paddingVertical: 3,
+    fontSize: 18,
   },
   darkBody: {
     color: "#fff",
     paddingVertical: 3,
+    fontSize: 18,
   },
   bodyContainer: {
     alignItems: "center",

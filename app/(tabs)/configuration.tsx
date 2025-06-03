@@ -5,6 +5,9 @@ import { InfoCircle } from "@/components/Icons";
 export default function Configuration() {
   const colorScheme = useColorScheme();
 
+  const themeSeparator =
+    colorScheme === "light" ? styles.lightSeparator : styles.darkSeparator;
+
   const themeContainer =
     colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
 
@@ -33,10 +36,12 @@ export default function Configuration() {
           This is the config page for the app (TODO)
         </Text>
       </View>
+      <View style={themeSeparator}></View>
       <View style={themeBodyContainer}>
         <Text style={themeText}>Current Theme:</Text>
         <Text style={themeText}>{colorScheme}</Text>
       </View>
+      <View style={themeSeparator}></View>
       <View style={themeFooterContainer}>
         <Text style={themeText}>
           <InfoCircle color={iconColor} />
@@ -45,12 +50,32 @@ export default function Configuration() {
         <Link style={themeLink} href="https://github.com/Juan-d12/Cumple-app">
           Cumple-app on github
         </Link>
-      </View>
+      </View>>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  lightSeparator: {
+    marginTop: 5,
+    marginBottom: 5,
+    height: "0.5%",
+    width: "95%",
+    backgroundColor: "#e0e1e2",
+    borderTopRightRadius: 2,
+    borderTopLeftRadius: 2,
+    alignSelf: "center",
+  },
+  darkSeparator: {
+    marginTop: 5,
+    marginBottom: 5,
+    height: "0.5%",
+    width: "95%",
+    backgroundColor: "#25292e",
+    borderTopRightRadius: 2,
+    borderTopLeftRadius: 2,
+    alignSelf: "center",
+  },
   lightContainer: {
     flex: 1,
     backgroundColor: "#fcf8f1",
