@@ -50,7 +50,7 @@ export default function Configuration() {
         <Link style={themeLink} href="https://github.com/Juan-d12/Cumple-app">
           Cumple-app on github
         </Link>
-      </View>>
+      </View>
     </View>
   );
 }
