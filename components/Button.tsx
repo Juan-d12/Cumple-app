@@ -61,10 +61,10 @@ export default function Button({ label, theme, onPress }: Props) {
   return (
     <View style={styles.buttonContainer}>
       <Pressable
-        style={styles.button}
-        onPress={() => alert("this is a test button")}
+        style={[styles.dateButton, { backgroundColor: "skyblue" }]}
+        onPress={onPress}
       >
-        <Text style={styles.buttonLabel}>{label}</Text>
+        <Text style={[styles.buttonLabel, { color: "#000" }]}>{label}</Text>
       </Pressable>
     </View>
   );
