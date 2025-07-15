@@ -47,26 +47,31 @@ export default function BirthdaysDb({
                 const insertDay = insertDate.getDate();
                 const insertMonth = insertDate.getMonth() + 1; // months are from 0 to 11
                 const insertYear = insertDate.getFullYear();
-                Alert.alert(
-                  "Confirm Birthday",
-                  `Name: ${insertName} \nDate(year-month-day):${insertYear} - ${insertMonth} - ${insertDay}`,
-                  [
-                    {
-                      text: "Cancel",
-                      style: "cancel",
-                    },
-                    {
-                      text: "OK",
-                      onPress: async () =>
-                        insertBirthday(
-                          insertName,
-                          insertDay,
-                          insertMonth,
-                          insertYear,
-                        ),
-                    },
-                  ],
-                );
+                // name can not be empty
+                if (insertName === "") {
+                  alert("The name field cannot be empty");
+                } else {
+                  Alert.alert(
+                    "Confirm Birthday",
+                    `Name: ${insertName} \nDate(year-month-day):${insertYear} - ${insertMonth} - ${insertDay}`,
+                    [
+                      {
+                        text: "Cancel",
+                        style: "cancel",
+                      },
+                      {
+                        text: "OK",
+                        onPress: async () =>
+                          insertBirthday(
+                            insertName,
+                            insertDay,
+                            insertMonth,
+                            insertYear,
+                          ),
+                      },
+                    ],
+                  );
+                }
               }}
             />
           )}
