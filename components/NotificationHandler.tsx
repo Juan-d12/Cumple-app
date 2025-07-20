@@ -1,5 +1,5 @@
 import * as Notifications from "expo-notifications";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import Button from "./Button";
 
@@ -19,31 +19,49 @@ export default function NotificationTest() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
-  // Schedule Notification function
-  const scheduleNotification = (seconds: number) => {
-    Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Notification test success",
-        body: `This was scheduled for ${seconds} sec later`,
-        data: { data: "goes here", test: { test1: "more data" } },
-      },
-      trigger: {
-        type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
-        seconds: seconds,
-      },
-    });
-  };
-
-  const handleShowNotification = () => {
-    scheduleNotification(5);
-  };
+  useEffect(() => {
+    registerForPushNotificationsAsync();
+  }, []);
 
   return (
     <View>
       <Button
         label="Notification scheduler test"
-        onPress={handleShowNotification}
+        onPress={handlePushNotification}
       ></Button>
     </View>
   );
+}
+
+// Schedule Notification function
+async function schedulePushNotification(seconds: number) {
+  Notifications.scheduleNotificationAsync({
+    content: {
+      title: "Notification test success",
+      body: `This was scheduled for ${seconds} sec later`,
+      data: { data: "goes here", test: { test1: "more data" } },
+    },
+    trigger: {
+      type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+      seconds: seconds,
+    },
+  });
+}
+
+const handlePushNotification = () => {
+  schedulePushNotification(5);
+};
+
+// Allow Notifications function
+async function registerForPushNotificationsAsync() {
+  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  let finalStatus = existingStatus;
+  if (existingStatus !== "granted") {
+    const { status } = await Notifications.requestPermissionsAsync();
+    finalStatus = status;
+  }
+  if (finalStatus !== "granted") {
+    alert("Failed to get push token for push notification!");
+    return;
+  }
 }
