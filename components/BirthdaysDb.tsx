@@ -187,7 +187,8 @@ export function Content() {
                     },
                     {
                       text: "Delete",
-                      onPress: async () => deleteBirthday(deleteName),
+                      onPress: async () =>
+                        deleteBirthday(deleteName, todos, setTodos),
                     },
                   ],
                 );
@@ -221,11 +222,20 @@ const insertBirthday = async (name, day, month, year) => {
   }
 };
 
-const deleteBirthday = async (name) => {
+const deleteBirthday = async (name, todos, setTodos) => {
   const db = await SQLite.openDatabaseAsync("Birthdays.db");
   // Delete birthday from te db
   await db.runAsync("DELETE FROM birthdays WHERE name = ?", name);
+  // Delete birthday from the array (to refresh the list shown)
+  let newTodos = [];
+  let lenght = todos.length;
+  for (let i = 0; i < lenght; i++) {
+    if (todos[i].name !== name) {
+      newTodos.push(todos[i]);
+    }
+  }
   alert(`${name} has been deleted`);
+  setTodos(newTodos);
 };
 
 // returns the days left for the birthday
