@@ -137,6 +137,10 @@ export function Content() {
     colorScheme === "light"
       ? styles.lightTodoItemText
       : styles.darkTodoItemText;
+  const themeButtonContainer =
+    colorScheme === "light"
+      ? styles.lightButtonContainer
+      : styles.darkButtonContainer;
 
   const db = useSQLiteContext();
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -161,43 +165,71 @@ export function Content() {
   );
 
   return (
-    <ScrollView>
-      <View style={themeContentContainer}>
-        {todos.map((todo, index) => (
-          <View style={themeTodoItemContainer} key={index}>
-            <Text style={themeTodoItemName}>{`${todo.name}`}</Text>
-            <Text style={themeTodoItemText}>
-              {`Date: ${todo.year} - ${todo.month} - ${todo.day}`}
-            </Text>
-            <Text style={themeTodoItemText}>
-              {`${daysUntilNextBirthday(todo.month, todo.day)} days left`}
-            </Text>
-            <Button
-              label="Delete"
-              theme="deleteBirthday"
-              onPress={() => {
-                const deleteName = todo.name;
-                Alert.alert(
-                  "Delete confirmation",
-                  `Are you sure you want to delete ${deleteName}?`,
-                  [
-                    {
-                      text: "Cancel",
-                      style: "cancel",
-                    },
-                    {
-                      text: "Delete",
-                      onPress: async () =>
-                        deleteBirthday(deleteName, todos, setTodos),
-                    },
-                  ],
-                );
-              }}
-            />
-          </View>
-        ))}
+    <View style={{ flex: 1 }}>
+      <View style={themeButtonContainer}>
+        <Text style={themeTodoItemText}>Order by:</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Button
+            label="Name"
+            theme="orderBirthday"
+            onPress={() => {
+              alert("To do");
+            }}
+          />
+          <Button
+            label="Year"
+            theme="orderBirthday"
+            onPress={() => {
+              alert("To do");
+            }}
+          />
+          <Button
+            label="Month"
+            theme="orderBirthday"
+            onPress={() => {
+              alert("To do");
+            }}
+          />
+        </View>
       </View>
-    </ScrollView>
+      <ScrollView>
+        <View style={themeContentContainer}>
+          {todos.map((todo, index) => (
+            <View style={themeTodoItemContainer} key={index}>
+              <Text style={themeTodoItemName}>{`${todo.name}`}</Text>
+              <Text style={themeTodoItemText}>
+                {`Date: ${todo.year} - ${todo.month} - ${todo.day}`}
+              </Text>
+              <Text style={themeTodoItemText}>
+                {`${daysUntilNextBirthday(todo.month, todo.day)} days left`}
+              </Text>
+              <Button
+                label="Delete"
+                theme="deleteBirthday"
+                onPress={() => {
+                  const deleteName = todo.name;
+                  Alert.alert(
+                    "Delete confirmation",
+                    `Are you sure you want to delete ${deleteName}?`,
+                    [
+                      {
+                        text: "Cancel",
+                        style: "cancel",
+                      },
+                      {
+                        text: "Delete",
+                        onPress: async () =>
+                          deleteBirthday(deleteName, todos, setTodos),
+                      },
+                    ],
+                  );
+                }}
+              />
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -337,7 +369,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     gap: 5,
     backgroundColor: "#e0e1e2",
-    borderRadius: 15,
     width: "100%",
     alignSelf: "center",
   },
@@ -346,7 +377,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     gap: 5,
     backgroundColor: "#25292e",
-    borderRadius: 15,
     width: "100%",
     alignSelf: "center",
   },
@@ -393,5 +423,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: 15,
     paddingRight: 15,
+  },
+  lightButtonContainer: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    gap: 5,
+    backgroundColor: "#fcf8f1",
+    width: "100%",
+    alignSelf: "center",
+  },
+  darkButtonContainer: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    gap: 5,
+    backgroundColor: "#03070e",
+    width: "100%",
+    alignSelf: "center",
   },
 });

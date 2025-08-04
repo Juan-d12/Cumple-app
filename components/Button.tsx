@@ -58,6 +58,18 @@ export default function Button({ label, theme, onPress }: Props) {
       </View>
     );
   }
+  if (theme === "orderBirthday") {
+    return (
+      <View style={styles.filterButtonContainer}>
+        <Pressable
+          style={[styles.button, { backgroundColor: "skyblue" }]}
+          onPress={onPress}
+        >
+          <Text style={[styles.buttonLabel, { color: "#000" }]}>{label}</Text>
+        </Pressable>
+      </View>
+    );
+  }
   return (
     <View style={styles.buttonContainer}>
       <Pressable
@@ -75,6 +87,14 @@ const styles = StyleSheet.create({
     width: 320,
     height: 70,
     marginHorizontal: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 3,
+  },
+  filterButtonContainer: {
+    width: 100,
+    height: 50,
+    marginHorizontal: 5,
     alignItems: "center",
     justifyContent: "center",
     padding: 3,
