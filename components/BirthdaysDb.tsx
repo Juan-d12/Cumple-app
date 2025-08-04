@@ -172,23 +172,17 @@ export function Content() {
           <Button
             label="Name"
             theme="orderBirthday"
-            onPress={() => {
-              alert("To do");
-            }}
+            onPress={async () => orderByName(setTodos)}
           />
           <Button
             label="Year"
             theme="orderBirthday"
-            onPress={() => {
-              alert("To do");
-            }}
+            onPress={() => orderByYear(setTodos)}
           />
           <Button
             label="Month"
             theme="orderBirthday"
-            onPress={() => {
-              alert("To do");
-            }}
+            onPress={() => orderByMonth(setTodos)}
           />
         </View>
       </View>
@@ -233,6 +227,7 @@ export function Content() {
   );
 }
 
+// CRUD operations
 const insertBirthday = async (name, day, month, year) => {
   const db = await SQLite.openDatabaseAsync("Birthdays.db");
   // name must be unique
@@ -268,6 +263,38 @@ const deleteBirthday = async (name, todos, setTodos) => {
   }
   alert(`${name} has been deleted`);
   setTodos(newTodos);
+};
+
+// Order functions
+const orderByName = async (setTodos) => {
+  const db = await SQLite.openDatabaseAsync("Birthdays.db");
+  async function setup() {
+    const result = await db.getAllAsync<Todo>(
+      "SELECT * FROM birthdays ORDER BY name",
+    );
+    setTodos(result);
+  }
+  setup();
+};
+const orderByYear = async (setTodos) => {
+  const db = await SQLite.openDatabaseAsync("Birthdays.db");
+  async function setup() {
+    const result = await db.getAllAsync<Todo>(
+      "SELECT * FROM birthdays ORDER BY year",
+    );
+    setTodos(result);
+  }
+  setup();
+};
+const orderByMonth = async (setTodos) => {
+  const db = await SQLite.openDatabaseAsync("Birthdays.db");
+  async function setup() {
+    const result = await db.getAllAsync<Todo>(
+      "SELECT * FROM birthdays ORDER BY month",
+    );
+    setTodos(result);
+  }
+  setup();
 };
 
 // returns the days left for the birthday
