@@ -50,6 +50,7 @@ export const SelectDate = ({ date, setDate }: Props) => {
       {show && (
         <DateTimePicker
           maximumDate={new Date()}
+          minimumDate={new Date(1912, 0, 1)}
           testID="dateTimePicker"
           value={date}
           mode={mode}
