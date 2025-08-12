@@ -150,7 +150,9 @@ export function Content() {
       // Do something when the screen is focused
       let isActive = true;
       async function setup() {
-        const result = await db.getAllAsync<Todo>("SELECT * FROM birthdays");
+        const result = await db.getAllAsync<Todo>(
+          "SELECT * FROM birthdays ORDER BY id DESC",
+        );
         if (isActive) {
           setTodos(result);
         }
