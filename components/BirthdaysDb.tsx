@@ -290,7 +290,7 @@ const orderByYear = async (setTodos) => {
   const db = await SQLite.openDatabaseAsync("Birthdays.db");
   async function setup() {
     const result = await db.getAllAsync<Todo>(
-      "SELECT * FROM birthdays ORDER BY year",
+      "SELECT * FROM birthdays ORDER BY year, month, day, name",
     );
     setTodos(result);
   }
@@ -300,7 +300,7 @@ const orderByMonth = async (setTodos) => {
   const db = await SQLite.openDatabaseAsync("Birthdays.db");
   async function setup() {
     const result = await db.getAllAsync<Todo>(
-      "SELECT * FROM birthdays ORDER BY month",
+      "SELECT * FROM birthdays ORDER BY month, day, name",
     );
     setTodos(result);
   }
