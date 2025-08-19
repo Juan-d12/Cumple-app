@@ -1,6 +1,6 @@
 import * as Notifications from "expo-notifications";
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import Button from "./Button";
 
 // First, set the handler that will cause the notification
@@ -14,31 +14,44 @@ Notifications.setNotificationHandler({
   }),
 });
 
-// This will show the notification
-export default function NotificationTest() {
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+type Props = {
+  seconds: number;
+  title: string;
+  body: string;
+};
 
+// This will set the notification
+export default function NotificationSetter({ seconds, title, body }: Props) {
   useEffect(() => {
-    registerForPushNotificationsAsync();
+    registerForNotificationsAsync();
   }, []);
 
   return (
     <View>
       <Button
-        label="Notification scheduler test"
-        onPress={handlePushNotification}
-      ></Button>
+        label="noti button"
+        theme="orderBirthday"
+        onPress={() => handleNotification(seconds, title, body)}
+      />
     </View>
   );
 }
 
+// This will cancel all notifications
+async function cancelNotifications() {
+  Notifications.cancelAllScheduledNotificationsAsync();
+}
+
 // Schedule Notification function
-async function schedulePushNotification(seconds: number) {
+async function scheduleNotification(
+  seconds: number,
+  title: string,
+  body: string,
+) {
   Notifications.scheduleNotificationAsync({
     content: {
-      title: "Notification test success",
-      body: `This was scheduled for ${seconds} sec later`,
+      title: title,
+      body: body,
       data: { data: "goes here", test: { test1: "more data" } },
     },
     trigger: {
@@ -48,12 +61,21 @@ async function schedulePushNotification(seconds: number) {
   });
 }
 
-const handlePushNotification = () => {
-  schedulePushNotification(5);
+const handleNotification = (seconds: number, title: string, body: string) => {
+  scheduleNotification(seconds, title, body);
 };
 
 // Allow Notifications function
-async function registerForPushNotificationsAsync() {
+async function registerForNotificationsAsync() {
+  if (Platform.OS === "android") {
+    await Notifications.setNotificationChannelAsync("myNotificationChannel", {
+      name: "A channel is needed for the permissions prompt to appear",
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: "#FF231F7C",
+    });
+  }
+
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
   let finalStatus = existingStatus;
   if (existingStatus !== "granted") {

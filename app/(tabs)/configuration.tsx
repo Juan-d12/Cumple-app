@@ -1,7 +1,6 @@
 import { Text, View, StyleSheet, useColorScheme } from "react-native";
 import { Link } from "expo-router";
 import { InfoCircle } from "@/components/Icons";
-import NotificationTest from "@/components/NotificationHandler";
 
 export default function Configuration() {
   const colorScheme = useColorScheme();
@@ -41,11 +40,6 @@ export default function Configuration() {
       <View style={themeBodyContainer}>
         <Text style={themeText}>Current Theme:</Text>
         <Text style={themeText}>{colorScheme}</Text>
-      </View>
-      <View style={themeSeparator}></View>
-      <View style={themeBodyContainer}>
-        <Text style={themeText}>Notification test</Text>
-        <NotificationTest />
       </View>
       <View style={themeSeparator}></View>
       <View style={themeFooterContainer}>

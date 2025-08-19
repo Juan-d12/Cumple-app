@@ -16,6 +16,7 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import Button from "@/components/Button";
+import NotificationSetter from "./NotificationHandler";
 
 type Props = {
   showAddButton: boolean;
@@ -36,9 +37,16 @@ export default function BirthdaysDb({
           onInit={migrateDbIfNeeded}
           useSuspense
         >
-          <Header />
           {!showAddButton ? (
-            <Content />
+            <View style={styles.Container}>
+              <Header />
+              <NotificationSetter
+                seconds={5}
+                title="Notificacion de prueba"
+                body="Esta es una notificacion de prueba"
+              />
+              <Content />
+            </View>
           ) : (
             <Button
               label="Add"
