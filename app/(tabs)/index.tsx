@@ -39,8 +39,8 @@ export default function Index() {
       </View>
       <View style={themeFooterContainer}>
         <Button
-          label="Add Birthday"
-          theme="addBirthday"
+          label="New Birthday"
+          theme="newBirthday"
           onPress={onAddBirthday}
         />
       </View>

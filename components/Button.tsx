@@ -8,7 +8,7 @@ type Props = {
 };
 
 export default function Button({ label, theme, onPress }: Props) {
-  if (theme === "addBirthday") {
+  if (theme === "newBirthday") {
     return (
       <View style={styles.buttonContainer}>
         <Pressable
