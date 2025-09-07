@@ -16,76 +16,36 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import Button from "@/components/Button";
-import NotificationSetter from "./NotificationHandler";
+import NotificationSetter from "@/components/NotificationHandler";
+import NewBirthdayForm from "@/components/NewBirthdayForm";
 
 type Props = {
-  showAddButton: boolean;
-  insertName?: string;
-  insertDate?: any;
+  showForm: boolean;
 };
 
-export default function BirthdaysDb({
-  showAddButton,
-  insertName,
-  insertDate,
-}: Props) {
+export default function BirthdaysDb({ showForm }: Props) {
   return (
-    <View style={styles.Container}>
-      <Suspense fallback={<Fallback />}>
-        <SQLiteProvider
-          databaseName="Birthdays.db"
-          onInit={migrateDbIfNeeded}
-          useSuspense
-        >
-          {!showAddButton ? (
-            <View style={styles.Container}>
-              <Header />
-              <NotificationSetter
-                seconds={5}
-                title="Notificacion de prueba"
-                body="Esta es una notificacion de prueba"
-              />
-              <Content />
-            </View>
-          ) : (
-            <Button
-              label="Add"
-              theme="insertBirthday"
-              onPress={() => {
-                const insertDay = insertDate.getDate();
-                const insertMonth = insertDate.getMonth() + 1; // months are from 0 to 11
-                const insertYear = insertDate.getFullYear();
-                // name can not be empty
-                if (insertName === "") {
-                  alert("The name field cannot be empty");
-                } else {
-                  Alert.alert(
-                    "Confirm Birthday",
-                    `Name: ${insertName} \nDate(year-month-day):${insertYear} - ${insertMonth} - ${insertDay}`,
-                    [
-                      {
-                        text: "Cancel",
-                        style: "cancel",
-                      },
-                      {
-                        text: "OK",
-                        onPress: async () =>
-                          insertBirthday(
-                            insertName,
-                            insertDay,
-                            insertMonth,
-                            insertYear,
-                          ),
-                      },
-                    ],
-                  );
-                }
-              }}
+    <Suspense fallback={<Fallback />}>
+      <SQLiteProvider
+        databaseName="Birthdays.db"
+        onInit={migrateDbIfNeeded}
+        useSuspense
+      >
+        {!showForm ? (
+          <View style={styles.Container}>
+            <Header />
+            <NotificationSetter
+              seconds={5}
+              title="Notificacion de prueba"
+              body="Esta es una notificacion de prueba"
             />
-          )}
-        </SQLiteProvider>
-      </Suspense>
-    </View>
+            <Content />
+          </View>
+        ) : (
+          <NewBirthdayForm />
+        )}
+      </SQLiteProvider>
+    </Suspense>
   );
 }
 
@@ -238,27 +198,6 @@ export function Content() {
 }
 
 // CRUD operations
-const insertBirthday = async (name, day, month, year) => {
-  const db = await SQLite.openDatabaseAsync("Birthdays.db");
-  // name must be unique
-  const nameResult = await db.getFirstAsync(
-    "SELECT name FROM birthdays WHERE name = ?",
-    name,
-  );
-  if (nameResult && nameResult["name"] === name) {
-    alert("This name is already saved, try a different name");
-  } else {
-    await db.runAsync(
-      "INSERT INTO birthdays (name, day, month, year) VALUES (?, ?, ?, ?)",
-      name,
-      day,
-      month,
-      year,
-    );
-    alert(`${name} has been added`);
-  }
-};
-
 const deleteBirthday = async (name, todos, setTodos) => {
   const db = await SQLite.openDatabaseAsync("Birthdays.db");
   // Delete birthday from te db

@@ -2,7 +2,7 @@ import { View, StyleSheet, useColorScheme } from "react-native";
 import { useState } from "react";
 import ImageViewer from "@/components/ImageViewer";
 import Button from "@/components/Button";
-import NewBirthdayForm from "@/components/NewBirthdayForm";
+import ModalHandler from "@/components/ModalHandler";
 
 const tortaImage = require("./../../assets/images/torta.jpg");
 
@@ -44,7 +44,7 @@ export default function Index() {
           onPress={onAddBirthday}
         />
       </View>
-      <NewBirthdayForm isVisible={isModalVisible} onClose={onModalClose} />
+      <ModalHandler isVisible={isModalVisible} onClose={onModalClose} />
     </View>
   );
 }

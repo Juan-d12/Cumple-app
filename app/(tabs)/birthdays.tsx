@@ -14,7 +14,7 @@ export default function Birthdays() {
     <View style={themeContainer}>
       <Text style={themeText}>The Birthdays have this format:</Text>
       <Text style={themeText}>Date: Year - Month - Day</Text>
-      <BirthdaysDb showAddButton={false} />
+      <BirthdaysDb showForm={false} />
     </View>
   );
 }
