@@ -19,11 +19,18 @@ import Button from "@/components/Button";
 import NotificationSetter from "@/components/NotificationHandler";
 import NewBirthdayForm from "@/components/NewBirthdayForm";
 
+/*
+possible labels:
+"birthdayDb"      shows all the birthdays in the db
+"birthdayForm"    shows the form to introduce new birthdays
+anything else shows the list of incoming birthdays (15 days from the current date)
+*/
+
 type Props = {
-  showForm: boolean;
+  label: string;
 };
 
-export default function BirthdaysDb({ showForm }: Props) {
+export default function BirthdaysDb({ label }: Props) {
   return (
     <Suspense fallback={<Fallback />}>
       <SQLiteProvider
@@ -31,7 +38,7 @@ export default function BirthdaysDb({ showForm }: Props) {
         onInit={migrateDbIfNeeded}
         useSuspense
       >
-        {!showForm ? (
+        {label == "birthdayDb" ? (
           <View style={styles.Container}>
             <Header />
             <NotificationSetter
@@ -41,8 +48,10 @@ export default function BirthdaysDb({ showForm }: Props) {
             />
             <Content />
           </View>
-        ) : (
+        ) : label == "birthdayForm" ? (
           <NewBirthdayForm />
+        ) : (
+          <IncomingBirthdays />
         )}
       </SQLiteProvider>
     </Suspense>
@@ -192,6 +201,24 @@ export function Content() {
             </View>
           ))}
         </View>
+      </ScrollView>
+    </View>
+  );
+}
+
+export function IncomingBirthdays() {
+  const colorScheme = useColorScheme();
+  const themeIncomingText =
+    colorScheme === "light"
+      ? styles.lightIncomingText
+      : styles.darkIncomingText;
+
+  return (
+    <View>
+      <ScrollView>
+        <Text style={themeIncomingText}>
+          Here goes the incoming birthdays (TO DO)
+        </Text>
       </ScrollView>
     </View>
   );
@@ -415,5 +442,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#03070e",
     width: "100%",
     alignSelf: "center",
+  },
+  lightIncomingText: {
+    color: "#000",
+    paddingVertical: 3,
+    fontSize: 16,
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  darkIncomingText: {
+    color: "#fff",
+    paddingVertical: 3,
+    fontSize: 16,
+    paddingLeft: 15,
+    paddingRight: 15,
   },
 });

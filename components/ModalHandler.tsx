@@ -45,7 +45,7 @@ export default function ModalHandler({ isVisible, onClose }: Props) {
           </Pressable>
         </View>
         <View style={themePad}>
-          <BirthdaysDb showForm={true} />
+          <BirthdaysDb label="birthdayForm" />
         </View>
       </View>
     </Modal>

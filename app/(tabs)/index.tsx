@@ -1,9 +1,10 @@
-import { View, StyleSheet, useColorScheme } from "react-native";
+import { View, StyleSheet, Text, useColorScheme } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 import ImageViewer from "@/components/ImageViewer";
 import Button from "@/components/Button";
 import ModalHandler from "@/components/ModalHandler";
+import BirthdaysDb from "@/components/BirthdaysDb";
 
 const tortaImage = require("./../../assets/images/torta.jpg");
 
@@ -16,6 +17,11 @@ export default function Index() {
 
   const themeText =
     colorScheme === "light" ? styles.lightText : styles.darkText;
+
+  const themeHeaderContainer =
+    colorScheme === "light"
+      ? styles.lightHeaderContainer
+      : styles.darkHeaderContainer;
 
   const themeFooterContainer =
     colorScheme === "light"
@@ -36,6 +42,10 @@ export default function Index() {
   return (
     <View style={themeContainer}>
       <SafeAreaView>
+        <View style={themeHeaderContainer}>
+          <Text style={themeText}>Upcoming Birthdays:</Text>
+          <BirthdaysDb label="incomingBd" />
+        </View>
         <View style={styles.imageContainer}>
           <ImageViewer imgSource={tortaImage} />
         </View>
@@ -55,23 +65,37 @@ export default function Index() {
 const styles = StyleSheet.create({
   lightContainer: {
     flex: 1,
+    flexDirection: "column",
     backgroundColor: "#fcf8f1",
     alignItems: "center",
   },
   darkContainer: {
     flex: 1,
+    flexDirection: "column",
+    backgroundColor: "#03070E",
+    alignItems: "center",
+  },
+  lightHeaderContainer: {
+    flex: 1 / 4,
+    backgroundColor: "#fcf8f1",
+    alignItems: "center",
+  },
+  darkHeaderContainer: {
+    flex: 1 / 4,
     backgroundColor: "#03070E",
     alignItems: "center",
   },
   lightFooterContainer: {
-    flex: 1 / 2,
+    flex: 1 / 4,
     backgroundColor: "#fcf8f1",
     alignItems: "center",
+    justifyContent: "center",
   },
   darkFooterContainer: {
-    flex: 1 / 2,
+    flex: 1 / 4,
     backgroundColor: "#03070E",
     alignItems: "center",
+    justifyContent: "center",
   },
   lightText: {
     color: "#000",
@@ -82,8 +106,8 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
   },
   imageContainer: {
-    flex: 1,
-    paddingTop: 40,
+    flex: 2 / 4,
     alignItems: "center",
+    justifyContent: "center",
   },
 });

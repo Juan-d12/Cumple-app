@@ -16,7 +16,7 @@ export default function Birthdays() {
       <SafeAreaView>
         <Text style={themeText}>The Birthdays have this format:</Text>
         <Text style={themeText}>Date: Year - Month - Day</Text>
-        <BirthdaysDb showForm={false} />
+        <BirthdaysDb label={"birthdayDb"} />
       </SafeAreaView>
     </View>
   );
