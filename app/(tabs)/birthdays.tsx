@@ -1,4 +1,5 @@
 import { Text, View, StyleSheet, useColorScheme } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import BirthdaysDb from "@/components/BirthdaysDb";
 
 export default function Birthdays() {
@@ -12,9 +13,11 @@ export default function Birthdays() {
 
   return (
     <View style={themeContainer}>
-      <Text style={themeText}>The Birthdays have this format:</Text>
-      <Text style={themeText}>Date: Year - Month - Day</Text>
-      <BirthdaysDb showForm={false} />
+      <SafeAreaView>
+        <Text style={themeText}>The Birthdays have this format:</Text>
+        <Text style={themeText}>Date: Year - Month - Day</Text>
+        <BirthdaysDb showForm={false} />
+      </SafeAreaView>
     </View>
   );
 }
@@ -35,9 +38,11 @@ const styles = StyleSheet.create({
   lightText: {
     color: "#000",
     paddingVertical: 3,
+    textAlign: "center",
   },
   darkText: {
     color: "#fff",
     paddingVertical: 3,
+    textAlign: "center",
   },
 });

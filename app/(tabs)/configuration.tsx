@@ -1,4 +1,5 @@
 import { Text, View, StyleSheet, useColorScheme } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Link } from "expo-router";
 import { InfoCircle } from "@/components/Icons";
 
@@ -31,26 +32,28 @@ export default function Configuration() {
 
   return (
     <View style={themeContainer}>
-      <View style={themeBodyContainer}>
-        <Text style={themeText}>
-          This is the config page for the app (TODO)
-        </Text>
-      </View>
-      <View style={themeSeparator}></View>
-      <View style={themeBodyContainer}>
-        <Text style={themeText}>Current Theme:</Text>
-        <Text style={themeText}>{colorScheme}</Text>
-      </View>
-      <View style={themeSeparator}></View>
-      <View style={themeFooterContainer}>
-        <Text style={themeText}>
-          <InfoCircle color={iconColor} />
-        </Text>
-        <Text style={themeText}>Github:</Text>
-        <Link style={themeLink} href="https://github.com/Juan-d12/Cumple-app">
-          Cumple-app on github
-        </Link>
-      </View>
+      <SafeAreaView>
+        <View style={themeBodyContainer}>
+          <Text style={themeText}>
+            This is the config page for the app (TODO)
+          </Text>
+        </View>
+        <View style={themeSeparator}></View>
+        <View style={themeBodyContainer}>
+          <Text style={themeText}>Current Theme:</Text>
+          <Text style={themeText}>{colorScheme}</Text>
+        </View>
+        <View style={themeSeparator}></View>
+        <View style={themeFooterContainer}>
+          <Text style={themeText}>
+            <InfoCircle color={iconColor} />
+          </Text>
+          <Text style={themeText}>Github:</Text>
+          <Link style={themeLink} href="https://github.com/Juan-d12/Cumple-app">
+            Cumple-app on github
+          </Link>
+        </View>
+      </SafeAreaView>
     </View>
   );
 }

@@ -1,4 +1,5 @@
 import { View, StyleSheet, useColorScheme } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 import ImageViewer from "@/components/ImageViewer";
 import Button from "@/components/Button";
@@ -34,17 +35,19 @@ export default function Index() {
 
   return (
     <View style={themeContainer}>
-      <View style={styles.imageContainer}>
-        <ImageViewer imgSource={tortaImage} />
-      </View>
-      <View style={themeFooterContainer}>
-        <Button
-          label="New Birthday"
-          theme="newBirthday"
-          onPress={onAddBirthday}
-        />
-      </View>
-      <ModalHandler isVisible={isModalVisible} onClose={onModalClose} />
+      <SafeAreaView>
+        <View style={styles.imageContainer}>
+          <ImageViewer imgSource={tortaImage} />
+        </View>
+        <View style={themeFooterContainer}>
+          <Button
+            label="New Birthday"
+            theme="newBirthday"
+            onPress={onAddBirthday}
+          />
+        </View>
+        <ModalHandler isVisible={isModalVisible} onClose={onModalClose} />
+      </SafeAreaView>
     </View>
   );
 }
@@ -81,5 +84,6 @@ const styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
     paddingTop: 40,
+    alignItems: "center",
   },
 });
