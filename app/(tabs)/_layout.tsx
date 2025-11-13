@@ -27,6 +27,7 @@ export default function TabsLayout() {
         options={{
           title: "Home",
           headerTitleAlign: "center",
+          headerShown: false,
           tabBarActiveTintColor: themeTabBarActive,
           tabBarInactiveTintColor: themeTabBarIncative,
           tabBarIcon: ({ color }) => <HomeIcon color={color} />,
@@ -37,6 +38,7 @@ export default function TabsLayout() {
         options={{
           title: "Birthdays",
           headerTitleAlign: "center",
+          headerShown: false,
           tabBarActiveTintColor: themeTabBarActive,
           tabBarInactiveTintColor: themeTabBarIncative,
           tabBarIcon: ({ color }) => <Gift color={color} />,
