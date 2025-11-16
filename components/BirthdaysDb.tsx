@@ -18,12 +18,13 @@ import React from "react";
 import Button from "@/components/Button";
 import NotificationSetter from "@/components/NotificationHandler";
 import NewBirthdayForm from "@/components/NewBirthdayForm";
+import { daysUntilNextBirthday } from "@/components/dbComponents/DaysUntilBirthday";
 
 /*
 possible labels:
 "birthdayDb"      shows all the birthdays in the db
 "birthdayForm"    shows the form to introduce new birthdays
-anything else shows the list of incoming birthdays (15 days from the current date)
+anything else     shows the list of incoming birthdays (15 days from the current date)
 */
 
 type Props = {
@@ -51,7 +52,7 @@ export default function BirthdaysDb({ label }: Props) {
         ) : label == "birthdayForm" ? (
           <NewBirthdayForm />
         ) : (
-          <IncomingBirthdays />
+          <UpcomingBirthdays />
         )}
       </SQLiteProvider>
     </Suspense>
@@ -206,19 +207,73 @@ export function Content() {
   );
 }
 
-export function IncomingBirthdays() {
+export function UpcomingBirthdays() {
   const colorScheme = useColorScheme();
-  const themeIncomingText =
+  const themeUpcomingText =
     colorScheme === "light"
-      ? styles.lightIncomingText
-      : styles.darkIncomingText;
+      ? styles.lightUpcomingText
+      : styles.darkUpcomingText;
+  const themeUpcomingContainer =
+    colorScheme === "light"
+      ? styles.lightUpcomingContainer
+      : styles.darkUpcomingContainer;
+
+  const db = useSQLiteContext();
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  // Get current date (day and month)
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
+  const currentDay = currentDate.getDate();
+  const today = new Date(currentYear, currentMonth, currentDay);
+  //Get upcoming date in 15 days (day and month)
+  const upcomingDate = upcomingDateLimit(today, 15);
+  const upcomingMonth = upcomingDate.getMonth();
+  const upcomingDay = upcomingDate.getDate();
+
+  async function setup() {
+    const result = await db.getAllAsync<Todo>(
+      "SELECT * FROM birthdays ORDER BY id DESC",
+    );
+    setTodos(result);
+  }
+  setup();
 
   return (
-    <View>
+    <View
+      style={{
+        flex: 1,
+        width: "100%",
+      }}
+    >
+      <View style={[themeUpcomingContainer, { flexDirection: "row" }]}>
+        <View style={{ flex: 1 }}>
+          <Text style={themeUpcomingText}>NAME</Text>
+        </View>
+        <View style={{ flex: 1 }}>
+          <Text style={themeUpcomingText}>DAY</Text>
+        </View>
+        <View style={{ flex: 1 }}>
+          <Text style={themeUpcomingText}>MONTH</Text>
+        </View>
+      </View>
       <ScrollView>
-        <Text style={themeIncomingText}>
-          Here goes the incoming birthdays (TO DO)
-        </Text>
+        <View style={themeUpcomingContainer}>
+          {todos.map((todo, index) => (
+            <View key={index} style={{ flexDirection: "row", width: "100%" }}>
+              <View style={{ flex: 1 }}>
+                <Text style={themeUpcomingText}>{`${todo.name}`}</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={themeUpcomingText}>{`${todo.day}`}</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={themeUpcomingText}>{`${todo.month}`}</Text>
+              </View>
+            </View>
+          ))}
+        </View>
       </ScrollView>
     </View>
   );
@@ -273,51 +328,22 @@ const orderByMonth = async (setTodos) => {
   setup();
 };
 
-// returns the days left for the birthday
-const daysUntilNextBirthday = (month, day) => {
-  // Get current Year
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth();
-  const currentDay = currentDate.getDate();
-  // Check if it is a leap year only if date is feb 29
-  if (month == 2 && day == 29) {
-    var isLeapYear: Boolean;
-    if (
-      currentYear % 4 === 0 &&
-      currentYear % 400 === 0 &&
-      currentYear % 100 !== 0
-    ) {
-      isLeapYear = true;
-    } else {
-      isLeapYear = false;
-    }
-    // Change to march 1 if not a leap year
-    if (!isLeapYear) {
-      month = 3;
-      day = 1;
-    }
-  }
-  // compare both dates
-  // Date counts months from 0 so we nneed to substract 1
-  const birthdayThisYear = new Date(currentYear, month - 1, day);
-  const today = new Date(currentYear, currentMonth, currentDay);
-  var daysLeft: number;
-  if (today < birthdayThisYear) {
-    daysLeft = (birthdayThisYear - today) / 86400000;
-  } else if (+today === +birthdayThisYear) {
-    daysLeft = 0;
-  } else {
-    // Make sure is not feb 29 in case current year is leap
-    if (month === 2 && day === 29) {
-      month = 3;
-      day = 1;
-    }
-    const birthdayNextYear = new Date(currentYear + 1, month - 1, day);
-    daysLeft = (birthdayNextYear - today) / 86400000;
-  }
-  return daysLeft;
+// IMPORTANTE las funciones incomingDateLimit y addDays deben ir juntas en el mismo file!!!!!1
+// Returns the date after n days days
+const upcomingDateLimit = (today: Date, days: number) => {
+  // Add 15 days to today
+  const limitDate = addDays(today, days);
+  return limitDate;
 };
+
+// Source - https://stackoverflow.com/a
+// Posted by sparebytes, modified by community. See post 'Timeline' for change history
+// Retrieved 2025-11-15, License - CC BY-SA 4.0
+function addDays(date, days) {
+  var result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
 
 async function migrateDbIfNeeded(db: SQLiteDatabase) {
   const DATABASE_VERSION = 1;
@@ -443,18 +469,30 @@ const styles = StyleSheet.create({
     width: "100%",
     alignSelf: "center",
   },
-  lightIncomingText: {
+  lightUpcomingContainer: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#DB877B",
+    backgroundColor: "#fcf8f1",
+    width: "100%",
+  },
+  darkUpcomingContainer: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "skyblue",
+    backgroundColor: "#03070e",
+    width: "100%",
+  },
+  lightUpcomingText: {
     color: "#000",
     paddingVertical: 3,
     fontSize: 16,
-    paddingLeft: 15,
-    paddingRight: 15,
+    textAlign: "center",
   },
-  darkIncomingText: {
+  darkUpcomingText: {
     color: "#fff",
     paddingVertical: 3,
     fontSize: 16,
-    paddingLeft: 15,
-    paddingRight: 15,
+    textAlign: "center",
   },
 });
